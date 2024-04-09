@@ -1,10 +1,16 @@
-function HomePage(){
-    return(
-        <div>
-            <h1>Home Page</h1>
-            <h2>Ceci est la page d'acceuil</h2>
-        </div>
-    )
-}
+// HomePage.tsx
+import React from "react";
+import Layout from "../components /Layout/Layout";
+
+const HomePage: React.FC = () => {
+    return (
+        <Layout>
+            <div>
+                <h1>Home Page</h1>
+                <h2>Ceci est la page d'accueil</h2>
+            </div>
+        </Layout>
+    );
+};
 
 export default HomePage;
