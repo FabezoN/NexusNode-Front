@@ -48,10 +48,19 @@ background:#DADADA;
 
 }
 .InputS{
-    width: 250px;
+    width: 19em;
+    border-radius: 10px;
+    background-color: white;
+    padding :7px 0;
+    border: none;
+    padding-left: 10px;
 }
 
 .Nexusnode{
     font-weight: bold;
     font-size: 1.5em;
+}
+
+.Icons:hover{
+    color: royalblue;
 }

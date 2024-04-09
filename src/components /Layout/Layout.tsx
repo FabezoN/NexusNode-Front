@@ -2,9 +2,9 @@ import React, { ReactNode } from 'react';
 import './Layout.css'
 import Logo from '../../assets/LogoNexusNode.png';
 import {Link} from "react-router-dom";
-import Paniers from '../../assets/icons8-panier-90.png'
-import Profils from '../../assets/icons8-utilisateur-90.png';
-
+import Paniers from '../../assets/icons8-panier-90.png';
+import { CgProfile } from "react-icons/cg";
+import { FaBasketShopping } from "react-icons/fa6";
 
 interface LayoutProps {
     children: ReactNode;
@@ -27,10 +27,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         <input className="InputS" placeholder="Rechercher un produit"></input>
                     </div>
                     <div className="PanierN">
-                        <img alt="Panier" className="Panier" src={Paniers}></img>
+                        <FaBasketShopping size={40} className="Icons"></FaBasketShopping>
                     </div>
                     <div className="ProfilN">
-                        <img alt="Profil" className="Profil" src={Profils}></img>
+                        <CgProfile size={40} className="Icons"></CgProfile>
                     </div>
                 </div>
             </header>
