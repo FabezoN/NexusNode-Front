@@ -1,0 +1,63 @@
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-form{
+    width: 19em;
+    border-radius: 10px;
+    background-color: white;
+    padding :7px 0;
+    border: none;
+    padding-left: 10px;
+}
+
+.Register{
+    height: 100vh;
+}
+
+.TopForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 9%;
+}
+
+.Logohere{
+    width: 90px;
+}
+
+.Titre{
+    font-size: 2em;
+}
+
+h1{
+    font-size: 3em;
+}
+.object-form{
+    padding-bottom: 1%;
+
+}
+
+button {
+    background-color: #87b9b2;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 2%;
+    width: 10em;
+}
+
+button:hover {
+    background-color: #000;
+}
+
+.Login{
+    margin-top:5%;
+}

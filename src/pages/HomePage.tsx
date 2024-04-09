@@ -1,6 +1,7 @@
 // HomePage.tsx
 import React from "react";
 import Layout from "../components /Layout/Layout";
+import './HomePage.css'
 
 const HomePage: React.FC = () => {
     return (

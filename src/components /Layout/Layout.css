@@ -26,6 +26,7 @@ background:#DADADA;
     padding-left:1%;
 }
 
+
 .Right{
     align-items: center;
     text-align: right;
@@ -48,4 +49,9 @@ background:#DADADA;
 }
 .InputS{
     width: 250px;
+}
+
+.Nexusnode{
+    font-weight: bold;
+    font-size: 1.5em;
 }
