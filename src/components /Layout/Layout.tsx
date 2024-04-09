@@ -20,7 +20,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     </Link>
                 </div>
                 <div className="Nom">
-                    <h1>Nexus Node</h1>
+                    <p className="Nexusnode">Nexus Node</p>
                 </div>
                 <div className="Right">
                     <div className="SearchBar">
