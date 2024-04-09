@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap');
+
+header {
+background:#DADADA;
+    display: flex;
+    align-items: center;
+}
+
+.Logo{
+    width: 60px;
+
+}
+.LogoN{
+    padding-left: 3%;
+}
+
+.Profil{
+    width:40px;
+}
+
+.Panier{
+    width: 40px;
+}
+
+.Nom{
+    padding-left:1%;
+}
+
+.Right{
+    align-items: center;
+    text-align: right;
+    position: absolute;
+    right: 0;
+    display: flex;
+    width: 50%;
+    justify-content: flex-end;
+}
+
+.ProfilN{
+    padding-right: 5%;
+}
+.PanierN{
+    padding-right: 5%;
+}
+.SearchBar{
+    padding-right: 5%;
+
+}
+.InputS{
+    width: 250px;
+}
