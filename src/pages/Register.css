@@ -1,0 +1,23 @@
+body{
+    background-image: linear-gradient(to right top, #dadada, #cbd0d8, #b4c8d3, #9ac1c7, #87b9b2);
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+.input-form{
+    width: 17em;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.Register{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
