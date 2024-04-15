@@ -1,27 +1,39 @@
 import React, { useState } from 'react';
 import './form.css'
 import Logo from "../assets/LogoNexusNode.png";
+import {loginUser, registerUser} from "../class/user";
+import {useNavigate} from "react-router-dom";
 
 const LoginForm: React.FC = () => {
-    const [formData, setFormData] = useState({
+    const [LoginForm, setFormData] = useState({
         email: '',
         password: ''
     });
+    const navigate = useNavigate(); // Utilise useNavigate pour la navigation
+    const [errorMessage, setErrorMessage] = React.useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        setFormData({ ...LoginForm, [name]: value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Envoi des données du formulaire
-        console.log('Formulaire soumis :', formData);
-        // Réinitialisation du formulaire
-        setFormData({
-            email: '',
-            password: ''
-        });
+        setErrorMessage('');
+        try {
+            // Envoi des données du formulaire
+            await loginUser(LoginForm);
+            // Réinitialisation du formulaire
+            setFormData({
+                email: '',
+                password: ''
+            });
+            navigate('/');
+        } catch (error) {
+            console.error('Erreur lors de la connexion:', error);
+            // Gérer l'erreur ici, par exemple, afficher un message d'erreur à l'utilisateur
+            setErrorMessage('Erreur lors de la connexion. Veuillez réessayer.');
+        }
     };
 
     return (
@@ -33,12 +45,12 @@ const LoginForm: React.FC = () => {
             <form onSubmit={handleSubmit}>
                 <h2 className="Titre">Se connecter</h2>
                 <div className="object-form">
-                    <input className="input-form" type="email" id="email" name="email" value={formData.email}
+                    <input className="input-form" type="email" id="email" name="email" value={LoginForm.email}
                            onChange={handleChange} required placeholder="Email"/>
                 </div>
                 <div className="object-form">
                     <input className="input-form" type="password" id="password" name="password"
-                           value={formData.password} onChange={handleChange} required placeholder="Mot de passe"/>
+                           value={LoginForm.password} onChange={handleChange} required placeholder="Mot de passe"/>
                 </div>
                 <button type="submit">Se connecter</button>
             </form>
