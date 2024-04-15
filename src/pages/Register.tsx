@@ -1,34 +1,44 @@
 import React, { useState } from 'react';
 import './form.css';
-import Logo from '../assets/LogoNexusNode.png'
+import Logo from '../assets/LogoNexusNode.png';
+import {registerUser} from '../class/user';
 
 const Register: React.FC = () => {
     const [formData, setFormData] = useState({
+        nom: '',
+        prenom: '',
         email: '',
-        firstName: '',
-        lastName: '',
         password: '',
-        confirmPassword: ''
+        role: 1,
+    });
+    const [formPassword, setFormPassword] = useState({
+        confirmPassword: '',
     });
     const [passwordsMatch, setPasswordsMatch] = useState(true);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        if (name === 'confirmPassword') {
+            setFormPassword({ ...formPassword, [name]: value });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (formData.password === formData.confirmPassword) {
-            // Envoi des données du formulaire
-            console.log('Formulaire soumis :', formData);
+        if (formData.password === formPassword.confirmPassword) {
+            registerUser(formData);
             // Réinitialisation du formulaire
             setFormData({
+                nom: '',
+                prenom: '',
                 email: '',
-                firstName: '',
-                lastName: '',
                 password: '',
-                confirmPassword: ''
+                role: 1,
+            });
+            setFormPassword({
+                confirmPassword: '',
             });
             setPasswordsMatch(true);
         } else {
@@ -49,11 +59,11 @@ const Register: React.FC = () => {
                            onChange={handleChange} required placeholder="Email"/>
                 </div>
                 <div className="object-form">
-                    <input className="input-form" type="text" id="firstName" name="firstName" value={formData.firstName}
+                    <input className="input-form" type="text" id="firstName" name="prenom" value={formData.prenom}
                            onChange={handleChange} required placeholder="Prénom"/>
                 </div>
                 <div className="object-form">
-                    <input className="input-form" type="text" id="lastName" name="lastName" value={formData.lastName}
+                    <input className="input-form" type="text" id="lastName" name="nom" value={formData.nom}
                            onChange={handleChange} required placeholder="Nom"/>
                 </div>
                 <div className="object-form">
@@ -62,7 +72,7 @@ const Register: React.FC = () => {
                 </div>
                 <div className="object-form">
                     <input className="input-form" type="password" id="confirmPassword" name="confirmPassword"
-                           value={formData.confirmPassword} onChange={handleChange} required
+                           value={formPassword.confirmPassword} onChange={handleChange} required
                            placeholder="Confirmez le mot de passe"/>
                 </div>
                 {!passwordsMatch && <p style={{color: 'red'}}>Les mots de passe ne correspondent pas.</p>}
