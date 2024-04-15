@@ -10,7 +10,7 @@ interface FormData {
 export async function registerUser(formData: FormData) {
     console.log(formData);
     try {
-        const response = await fetch('http://localhost:3000/user/sign-up', {
+        const response = await fetch('http://localhost:3000/users/sign-up', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

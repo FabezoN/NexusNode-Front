@@ -3,20 +3,20 @@ import './form.css'
 import Logo from "../assets/LogoNexusNode.png";
 
 const LoginForm: React.FC = () => {
-    const [formData, setFormData] = useState({
+    const [LoginForm, setFormData] = useState({
         email: '',
         password: ''
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        setFormData({ ...LoginForm, [name]: value });
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // Envoi des données du formulaire
-        console.log('Formulaire soumis :', formData);
+        console.log('Formulaire soumis :', LoginForm);
         // Réinitialisation du formulaire
         setFormData({
             email: '',
@@ -33,12 +33,12 @@ const LoginForm: React.FC = () => {
             <form onSubmit={handleSubmit}>
                 <h2 className="Titre">Se connecter</h2>
                 <div className="object-form">
-                    <input className="input-form" type="email" id="email" name="email" value={formData.email}
+                    <input className="input-form" type="email" id="email" name="email" value={LoginForm.email}
                            onChange={handleChange} required placeholder="Email"/>
                 </div>
                 <div className="object-form">
                     <input className="input-form" type="password" id="password" name="password"
-                           value={formData.password} onChange={handleChange} required placeholder="Mot de passe"/>
+                           value={LoginForm.password} onChange={handleChange} required placeholder="Mot de passe"/>
                 </div>
                 <button type="submit">Se connecter</button>
             </form>
