@@ -22,8 +22,10 @@ const LoginForm: React.FC = () => {
         setErrorMessage('');
         try {
             // Envoi des données du formulaire
-            await loginUser(LoginForm);
+           const data =  await loginUser(LoginForm);
+           const user = JSON.stringify(data);
             // Réinitialisation du formulaire
+            sessionStorage.setItem('user', user);
             setFormData({
                 email: '',
                 password: ''

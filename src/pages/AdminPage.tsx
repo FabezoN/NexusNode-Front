@@ -3,7 +3,9 @@ import Layout from "../components /Layout/Layout";
 import './AdminPage.css'
 import { fetchCommandes } from "../class/commande";
 
+
 const AdminPage: React.FC = () => {
+
     useEffect(() => {
         const fetchData = async () => {
             try {
