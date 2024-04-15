@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './form.css'
 import Logo from "../assets/LogoNexusNode.png";
 import {loginUser, registerUser} from "../class/user";
-import {useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 
 const LoginForm: React.FC = () => {
     const [LoginForm, setFormData] = useState({
@@ -53,6 +53,9 @@ const LoginForm: React.FC = () => {
                            value={LoginForm.password} onChange={handleChange} required placeholder="Mot de passe"/>
                 </div>
                 <button type="submit">Se connecter</button>
+                <NavLink to="/register">
+                    <button> S'inscrire</button>
+                </NavLink>
             </form>
         </div>
     );
