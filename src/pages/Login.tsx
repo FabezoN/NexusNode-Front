@@ -1,27 +1,39 @@
 import React, { useState } from 'react';
 import './form.css'
 import Logo from "../assets/LogoNexusNode.png";
+import {loginUser, registerUser} from "../class/user";
+import {useNavigate} from "react-router-dom";
 
 const LoginForm: React.FC = () => {
     const [LoginForm, setFormData] = useState({
         email: '',
         password: ''
     });
+    const navigate = useNavigate(); // Utilise useNavigate pour la navigation
+    const [errorMessage, setErrorMessage] = React.useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({ ...LoginForm, [name]: value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Envoi des données du formulaire
-        console.log('Formulaire soumis :', LoginForm);
-        // Réinitialisation du formulaire
-        setFormData({
-            email: '',
-            password: ''
-        });
+        setErrorMessage('');
+        try {
+            // Envoi des données du formulaire
+            await loginUser(LoginForm);
+            // Réinitialisation du formulaire
+            setFormData({
+                email: '',
+                password: ''
+            });
+            navigate('/');
+        } catch (error) {
+            console.error('Erreur lors de la connexion:', error);
+            // Gérer l'erreur ici, par exemple, afficher un message d'erreur à l'utilisateur
+            setErrorMessage('Erreur lors de la connexion. Veuillez réessayer.');
+        }
     };
 
     return (
