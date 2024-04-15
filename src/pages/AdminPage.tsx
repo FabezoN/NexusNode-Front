@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {NavLink, useNavigate } from 'react-router-dom';
-import Layout from '../components /Layout/Layout';
+import Layout from '../components/Layout/Layout';
 import './AdminPage.css';
 import { fetchCommandes } from '../class/commande';
 

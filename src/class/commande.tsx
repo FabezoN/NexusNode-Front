@@ -1,6 +1,6 @@
 export async function fetchCommandes() {
     try {
-        const response = await fetch('http://localhost:3000/commandes/', {
+        const response = await fetch('http://localhost:3000/commande/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
