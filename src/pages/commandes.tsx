@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import {NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../components /Layout/Layout';
 import './AdminPage.css';
 import { fetchCommandes } from '../class/commande';
 
-const AdminPage: React.FC = () => {
+const Commandes: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,27 +34,14 @@ const AdminPage: React.FC = () => {
 
     return (
         <Layout>
-            <h2 className="titre">Page d'administration</h2>
-            <div className="categories">
-                <div className="commandes">
-                    <NavLink to="/commandes">
-                        <button>Consulter</button>
-                    </NavLink>
-                </div>
-                <div className="produits">
-                    <NavLink to="/gestionsProduits">
-                        <button>Produits</button>
-                    </NavLink>
-
-                </div>
-                <div className="statistique">
-                    <NavLink to="/statistique">
-                        <button>Statistique</button>
-                    </NavLink>
-                </div>
+            <div>
+                <h4>
+                    listes des commandes
+                    
+                </h4>
             </div>
         </Layout>
     );
 };
 
-export default AdminPage;
+export default Commandes;

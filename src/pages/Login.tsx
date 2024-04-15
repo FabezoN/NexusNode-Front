@@ -18,6 +18,7 @@ const LoginForm: React.FC = () => {
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
+        sessionStorage.clear();
         e.preventDefault();
         setErrorMessage('');
         try {

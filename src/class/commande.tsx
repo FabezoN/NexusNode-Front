@@ -10,12 +10,8 @@ export async function fetchCommandes() {
         if (!response.ok) {
             throw new Error('Erreur lors de la récupération des commandes');
         }
-
-        const data = await response.json();
-        console.log('Commandes récupérées:', data);
-        // Traitez les données récupérées ici, par exemple, mettez-les à jour dans votre application
+        return await response.json();
     } catch (error) {
         console.error('Erreur lors de la récupération des commandes:', error);
-        // Gérez l'erreur ici, par exemple, affichez un message d'erreur à l'utilisateur
     }
 }

@@ -14,7 +14,6 @@ if (sessionStorage.getItem('user') !== null) {
     if (storage !== null) { // Vérifie que storage n'est pas null avant de continuer
         const userObject = JSON.parse(storage); // Maintenant sûr que storage est une chaîne non-nulle
         const idUser = userObject.info; // Accéder à la propriété id dans l'objet info
-        console.log('User', idUser);
     }
 }
 
