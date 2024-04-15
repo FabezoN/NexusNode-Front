@@ -5,10 +5,32 @@ import {Link} from "react-router-dom";
 import Paniers from '../../assets/icons8-panier-90.png';
 import { CgProfile } from "react-icons/cg";
 import { FaBasketShopping } from "react-icons/fa6";
+import {getInfoUser} from '../../class/user'
 
 interface LayoutProps {
     children: ReactNode;
 }
+
+interface UserInfo {
+    auth: boolean;
+    token: string;
+    info: {
+        id: number;
+        role: number;
+        nom: string;
+        mail: string;
+        prenom: string;
+    };
+}
+if (sessionStorage.getItem('user') !==null){
+    const storage = sessionStorage.getItem('user');
+    if (storage) {
+        const userObject: UserInfo = JSON.parse(storage); // Assure-toi que le JSON correspond à l'interface
+        console.log('salut toi', userObject.info);
+    }
+}
+
+
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (

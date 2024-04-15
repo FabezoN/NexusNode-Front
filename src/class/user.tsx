@@ -60,4 +60,24 @@ export async function loginUser(loginForm: LoginForm) {
         alert(error.message);
     }
 }
+export async function getInfoUser(userId: number){
+    try {
+        const response = await fetch(`http://localhost:3000/users/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de la Récupération du Profile');
+        }
+
+        const result = await response.json();
+        alert('Profile récupéré !');
+} catch (error) {
+    console.error('Erreur lors de la récupération du Profile:', error);
+    throw error;
+}
+};
 
