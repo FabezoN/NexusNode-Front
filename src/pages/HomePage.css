@@ -1,27 +1,41 @@
-.TitreProduit{
-    font-size: 2em;
-    padding-left: 2em;
-}
+/* HomePage.css */
 
-.AllProduits{
-    display: flex;
-    justify-content: space-between;
-    padding-left: 10em;
-    padding-right: 10em;
-    padding-top: 3em;
-}
-
-.Categorie{
+.TitreProduits {
     text-align: center;
-    background-color: #87b9b2;
-    padding-left: 1em;
-    padding-right: 1em;
-    border-radius: 15px;
-    text-decoration: none;
-    color: inherit;
+    margin-bottom: 20px;
 }
-.Produit{
+
+.AllProduits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.Categorie {
+    text-decoration: none;
+    color: black;
+    margin-bottom: 20px;
+    width: 30%;
+}
+
+.Categorie > div {
+    background-color: #87b9b2;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.Categorie h3 {
+    margin-bottom: 10px;
+}
+
+.Produits {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 10px;
+    justify-content: space-around;
+}
+
+.Icons {
+    cursor: pointer;
 }
