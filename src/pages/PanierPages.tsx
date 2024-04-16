@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout/Layout";
 import './PanierPages.css'
 import { BsFillTrash3Fill } from "react-icons/bs";
@@ -12,6 +12,7 @@ interface CartItem {
 
 const PanierPages: React.FC = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
     useEffect(() => {
         const cartData = localStorage.getItem("cart");
         if (cartData) {
@@ -21,7 +22,7 @@ const PanierPages: React.FC = () => {
                 const [id, libelle, prixStr] = key.split("/");
                 const prix = parseFloat(prixStr);
                 const quantite = cartObject[key];
-                cartItemsArray.push({id: parseInt(id), libelle, prix, quantite});
+                cartItemsArray.push({ id: parseInt(id), libelle, prix, quantite });
             }
             setCartItems(cartItemsArray);
         }
@@ -34,6 +35,24 @@ const PanierPages: React.FC = () => {
     const calculateTotal = (): number => {
         const total = cartItems.reduce((total, item) => total + calculateItemTotal(item), 0);
         return parseFloat(total.toFixed(2));
+    };
+
+    const removeItem = (id: number) => {
+        const updatedCartItems = cartItems.map(item => {
+            if (item.id === id && item.quantite > 0) {
+                const updatedQuantite = item.quantite - 1;
+                if (updatedQuantite === 0) {
+                    // Supprimer l'article du localStorage si la quantité devient 0
+                    localStorage.removeItem(`cart/${item.id}/${item.libelle}/${item.prix}`);
+                    return null; // Retourne null pour exclure l'article du panier mis à jour
+                } else {
+                    localStorage.setItem(`cart/${item.id}/${item.libelle}/${item.prix}`, updatedQuantite.toString());
+                    return { ...item, quantite: updatedQuantite };
+                }
+            }
+            return item;
+        }).filter(item => item !== null) as CartItem[]; // Filtre les éléments null
+        setCartItems(updatedCartItems);
     };
 
     return (
@@ -49,8 +68,8 @@ const PanierPages: React.FC = () => {
                                 <div>Prix unitaire: {item.prix}€</div>
                                 <div className="QuantitéTrash">
                                     <div>Quantité: {item.quantite}</div>
+                                    <BsFillTrash3Fill className="Icons" onClick={() => removeItem(item.id)} />
                                 </div>
-
                                 <div>Total pour cet article: {calculateItemTotal(item)}€</div>
                             </div>
                         ))}
@@ -60,7 +79,6 @@ const PanierPages: React.FC = () => {
                 <div className="RightP">
                 </div>
             </div>
-
         </Layout>
     );
 };
