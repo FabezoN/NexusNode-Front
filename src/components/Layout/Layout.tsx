@@ -9,6 +9,13 @@ import {FaBasketShopping} from "react-icons/fa6";
 interface LayoutProps {
     children: ReactNode;
 }
+if (sessionStorage.getItem('user') !== null) {
+    const storage = sessionStorage.getItem('user');
+    if (storage !== null) { // Vérifie que storage n'est pas null avant de continuer
+        const userObject = JSON.parse(storage); // Maintenant sûr que storage est une chaîne non-nulle
+        const idUser = userObject.info; // Accéder à la propriété id dans l'objet info
+    }
+}
 
 const Layout: React.FC<LayoutProps> = ({children}) => {
     return (
