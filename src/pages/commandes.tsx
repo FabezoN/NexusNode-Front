@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {NavLink, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout/Layout';
-import Modal from '../components/Modal/Modal'; // Assure-toi que le chemin vers le composant Modal est correct
+import Modal from '../components/Modal/Modal';
 import './AdminPage.css';
 import { fetchCommandes } from '../class/commande';
 import { BsFiletypePdf } from "react-icons/bs";
 
 interface ICommande {
-    cheminFacture: string;
-    dateCommande: string;
-    idAdresse: number;
     idCommande: number;
-    idPaiement: number;
+    dateCommande: string;
     idUser: number;
-    nomFacture: string;
+    TotalHT: number;
+    TotalTTC: number;
+    AdresseLivraison: string;
+    DetailsProduits: string;
+    NomClient: string;
 }
 
 const Commandes: React.FC = () => {
@@ -21,6 +22,7 @@ const Commandes: React.FC = () => {
     const [commandes, setCommandes] = useState<ICommande[]>([]);
     const [isModalOpen, setModalOpen] = useState(false);
     const [selectedCommande, setSelectedCommande] = useState<ICommande | null>(null);
+    const [search, setSearch] = useState('');  // État pour la valeur de recherche
 
     useEffect(() => {
         const storage = sessionStorage.getItem('user');
@@ -39,7 +41,6 @@ const Commandes: React.FC = () => {
             try {
                 const allCommandes = await fetchCommandes();
                 setCommandes(allCommandes);
-                console.log(allCommandes);
             } catch (error) {
                 console.error('Erreur lors de la récupération des commandes:', error);
             }
@@ -54,51 +55,54 @@ const Commandes: React.FC = () => {
     };
 
     const viewPDF = (pdf: string) => {
-        // Vérifie si le chemin PDF n'est pas vide
         if (pdf) {
-            console.log(pdf);
-            // Ouvre le PDF dans un nouvel onglet
             window.open(pdf, '_blank');
         } else {
             console.error("Le chemin du fichier PDF est vide.");
         }
     };
 
+    // Fonction pour filtrer les commandes
+    const filteredCommandes = commandes.filter(commande =>
+        commande.idCommande.toString().includes(search) ||
+        commande.idUser.toString().includes(search) ||
+        commande.NomClient.toString().includes(search)
 
+    );
+    console.log(commandes);
     return (
         <Layout>
             <div>
                 <h4>Liste des commandes</h4>
+                <input
+                    type="text"
+                    placeholder="Recherche par ID de commande ou ID utilisateur..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
                 <table>
                     <thead>
                     <tr>
                         <th>Date de la commande</th>
                         <th>ID de commande</th>
-                        <th>Nom de la facture</th>
+                        <th>Numéro Client</th>
+                        <th>Prix HT</th>
                         <th>Actions</th>
-                        <th>
-                            Export
-                        </th>
                     </tr>
                     </thead>
                     <tbody>
-                    {commandes.map((commande) => (
+                    {filteredCommandes.map((commande) => (
                         <tr key={commande.idCommande}>
                             <td>{new Date(commande.dateCommande).toLocaleDateString()}</td>
                             <td>{commande.idCommande}</td>
-                            <td>{commande.nomFacture}</td>
+                            <td>{commande.idUser}</td>
+                            <td>{commande.TotalHT}€</td>
                             <td>
                                 <button onClick={() => handleDetailsClick(commande)}>
                                     Voir Détails
                                 </button>
+                                <BsFiletypePdf size={20} className='Icon' onClick={() => viewPDF(commande.DetailsProduits)}/>
                             </td>
-                            <td>
-                                <div className='Buttons'>
-                                    <BsFiletypePdf  size={20} className='Icon' onClick={() => viewPDF(commande.cheminFacture)}/>
-
-                                </div>
-                            </td>
-
                         </tr>
                     ))}
                     </tbody>
@@ -108,12 +112,18 @@ const Commandes: React.FC = () => {
                         <div>
                             <h5>Détails de la Commande</h5>
                             <p>ID de commande: {selectedCommande.idCommande}</p>
+                            <p>Client: {selectedCommande.NomClient} </p>
                             <p>Date de la commande: {new Date(selectedCommande.dateCommande).toLocaleDateString()}</p>
-                            <p>Nom de la facture: {selectedCommande.nomFacture}</p>
-                            <p>Chemin de la facture: {selectedCommande.cheminFacture}</p>
+                            <p>Total HT: {selectedCommande.TotalHT} €</p>
+                            <p>Total TTC: {selectedCommande.TotalTTC} €</p>
+                            <p>Adresse de livraison: {selectedCommande.AdresseLivraison}</p>
+                            <p>Détails des produits: {selectedCommande.DetailsProduits}</p>
                         </div>
                     )}
                 </Modal>
+                <NavLink to="/adminpage">
+                    <button>Retour</button>
+                </NavLink>
             </div>
         </Layout>
     );
