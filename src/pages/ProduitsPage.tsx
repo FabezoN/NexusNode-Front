@@ -1,11 +1,11 @@
-import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import {useParams} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 import Layout from "../components /Layout/Layout";
-import { fetchProduitsCategorie } from "../class/produit";
+import {fetchProduitsCategorie} from "../class/produit";
 
 const ProduitsPage: React.FC = () => {
     const [produitdetails, setproduitdetails] = useState<any[]>([]); // État pour stocker les produits
-    const { id } = useParams<{ id: string }>(); // Récupère l'ID de la catégorie depuis l'URL
+    const {id} = useParams<{ id: string }>(); // Récupère l'ID de la catégorie depuis l'URL
 
     useEffect(() => {
         const fetchProduitsdetaildata = async () => {
@@ -26,8 +26,18 @@ const ProduitsPage: React.FC = () => {
 
     return (
         <Layout>
-            <h2 className="TitreProduit">DetailsProduits</h2>
+            <h2 className="TitreProduit">Tout</h2>
             {/* Affichez les détails du produit ici */}
+            <div className="ProduitParCatégories">
+                {produitdetails.map((produit, index) => (
+                    <div key={index} className="Produit">
+                        <h3>{produit.libelle}</h3>
+                        <p>Description: {produit.description}</p>
+                        <p>Prix: {produit.prix} €</p>
+                        {/* Ajoutez d'autres champs si nécessaire */}
+                    </div>
+                ))}
+            </div>
         </Layout>
     );
 };
