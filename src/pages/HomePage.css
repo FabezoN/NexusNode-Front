@@ -1,0 +1,27 @@
+.TitreProduit{
+    font-size: 2em;
+    padding-left: 2em;
+}
+
+.AllProduits{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10em;
+    padding-right: 10em;
+    padding-top: 3em;
+}
+
+.Categorie{
+    text-align: center;
+    background-color: #87b9b2;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-radius: 15px;
+    text-decoration: none;
+    color: inherit;
+}
+.Produit{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

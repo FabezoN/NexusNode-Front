@@ -5,6 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { FaBasketShopping } from "react-icons/fa6";
 
+
 interface LayoutProps {
     children: React.ReactNode;
 }
@@ -67,6 +68,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 <CgProfile size={40} className="Icons" />
                             </NavLink>
                         )}
+
                     </div>
                 </div>
             </header>
