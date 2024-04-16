@@ -5,6 +5,7 @@ import './HomePage.css';
 import { fetchProduits } from "../class/produit";
 import {FaBasketShopping} from "react-icons/fa6";
 
+
 const HomePage: React.FC = () => {
     const [produits, setProduits] = useState<any[]>([]); // État pour stocker les produits
 
@@ -36,21 +37,9 @@ const HomePage: React.FC = () => {
 
     return (
         <Layout>
-            <h1 className="TitreProduit">Tout nos produits par catégorie</h1>
-            <div className="AllProduits">
-                {Object.entries(trierProduitsParCategorie()).map(([categorie, produits]) => (
-                    <NavLink key={categorie} to={`/categorieproduit/${produits[0].id_Categorie}`} className="Categorie">
-                        <div>
-                            <h3>{categorie} :</h3> {/* Utilisation du libellé de la catégorie */}
-                            {produits.map(produit => (
-                                <div key={produit.id} className="Produit">
-                                    <p>{produit.materiel_libelle} - {produit.prix} €</p>
-                                    <FaBasketShopping size={20} className="Icons"></FaBasketShopping>
-                                </div>
-                            ))}
-                        </div>
-                    </NavLink>
-                ))}
+            <div>
+                <h1>Home Page</h1>
+                <h2>Ceci est la page d'accueil</h2>
             </div>
         </Layout>
     );
