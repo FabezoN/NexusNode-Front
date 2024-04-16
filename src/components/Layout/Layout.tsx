@@ -51,13 +51,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         {userRole === 1 && (
                                             <React.Fragment>
                                                 <NavLink to="/profile" className="MenuOption">Profil</NavLink>
-                                                <NavLink to="/logout" className="MenuOption">Déconnexion</NavLink>
+                                                <NavLink to="/login" className="MenuOption">Déconnexion</NavLink>
                                             </React.Fragment>
                                         )}
                                         {userRole === 2 && (
                                             <React.Fragment>
                                                 <NavLink to="/adminpage" className="MenuOption">Panel</NavLink>
-                                                <NavLink to="/logout" className="MenuOption">Déconnexion</NavLink>
+                                                <NavLink to="/login" className="MenuOption">Déconnexion</NavLink>
                                             </React.Fragment>
                                         )}
                                     </div>
