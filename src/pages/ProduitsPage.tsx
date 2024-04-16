@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import Layout from "../components /Layout/Layout";
+import Layout from "../components/Layout/Layout";
 import {fetchProduitsCategorie} from "../class/produit";
 
 const ProduitsPage: React.FC = () => {
