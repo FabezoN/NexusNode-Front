@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import AdminPage from "./pages/AdminPage";
 import Commandes from "./pages/commandes";
+import ProduitsPage from "./pages/ProduitsPage";
 
 const router = createBrowserRouter([
   {
@@ -24,12 +25,14 @@ const router = createBrowserRouter([
         path : '/adminpage',
         element : <AdminPage/>
     },
-
+    {
+        path: '/categorieproduit/:id',
+        element: <ProduitsPage/>
+    },
     {
         path: '/commandes',
         element: <Commandes/>
-    },
-    
+    }
 ])
 
 function App() {

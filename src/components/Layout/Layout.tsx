@@ -2,7 +2,6 @@ import React, {ReactNode} from 'react';
 import './Layout.css'
 import Logo from '../../assets/LogoNexusNode.png';
 import {Link, NavLink} from "react-router-dom";
-import Paniers from '../../assets/icons8-panier-90.png';
 import {CgProfile} from "react-icons/cg";
 import {FaBasketShopping} from "react-icons/fa6";
 
@@ -37,7 +36,7 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
                         <FaBasketShopping size={40} className="Icons"></FaBasketShopping>
                     </div>
                     <div className="ProfilN">
-                        <NavLink to="login">
+                        <NavLink to="/login">
                             <CgProfile size={40} className="Icons" ></CgProfile>
                         </NavLink>
                     </div>
