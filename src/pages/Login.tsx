@@ -5,6 +5,7 @@ import {loginUser, registerUser} from "../class/user";
 import {NavLink, useNavigate} from "react-router-dom";
 
 const LoginForm: React.FC = () => {
+    sessionStorage.clear();
     const [LoginForm, setFormData] = useState({
         email: '',
         password: ''
