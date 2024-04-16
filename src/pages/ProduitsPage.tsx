@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 import { fetchProduitsCategorie } from "../class/produit";
 import './ProduitPage.css';
-import { HiShoppingCart } from "react-icons/hi";
+import AddToCartFunction from "../components/Hooks/AddToCartFunction";
 
 const ProduitsPage: React.FC = () => {
     const [produitdetails, setProduitdetails] = useState<any[]>([]);
-    const [categorieNom, setCategorieNom] = useState<string>(""); // État pour stocker le nom de la catégorie
+    const [categorieNom, setCategorieNom] = useState<string>("");
+    const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
     const { id } = useParams<{ id: string }>();
 
     useEffect(() => {
@@ -16,7 +17,6 @@ const ProduitsPage: React.FC = () => {
                 if (id) {
                     const dataProduitDetail = await fetchProduitsCategorie(id);
                     setProduitdetails(dataProduitDetail);
-                    // Mettre à jour le nom de la catégorie si les détails du produit contiennent une catégorie
                     if (dataProduitDetail.length > 0) {
                         setCategorieNom(dataProduitDetail[0].categorieNom);
                     }
@@ -40,12 +40,12 @@ const ProduitsPage: React.FC = () => {
                         <p className="Description">Description : {produit.description}</p>
                         <p>Prix : {produit.prix} €</p>
                         <div className="AjoutPanier">
-                            <select className="SelectProduits">
+                            <select className="SelectProduits" onChange={(e) => setSelectedQuantity(parseInt(e.target.value))}>
                                 {Array.from(Array(9).keys()).map((value, index) => (
                                     <option key={index} value={value + 1}>{value + 1}</option>
                                 ))}
                             </select>
-                            <HiShoppingCart size={25} className="Icons"/>
+                            <AddToCartFunction productId={produit.idMateriel} selectedQuantity={selectedQuantity} libelleId={produit.libelle} prix={produit.prix} />
                         </div>
                     </div>
                 ))}

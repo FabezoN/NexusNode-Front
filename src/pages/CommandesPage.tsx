@@ -17,7 +17,7 @@ interface ICommande {
     NomClient: string;
 }
 
-const Commandes: React.FC = () => {
+const CommandesPage: React.FC = () => {
     const navigate = useNavigate();
     const [commandes, setCommandes] = useState<ICommande[]>([]);
     const [isModalOpen, setModalOpen] = useState(false);
@@ -129,4 +129,4 @@ const Commandes: React.FC = () => {
     );
 };
 
-export default Commandes;
+export default CommandesPage;

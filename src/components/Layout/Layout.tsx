@@ -26,9 +26,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div>
             <header>
                 <div className="LogoN">
-                    <Link to="/">
+                    <NavLink to="/">
                         <img alt="Logo" className="Logo" src={Logo} />
-                    </Link>
+                    </NavLink>
                 </div>
                 <div className="Nom">
                     <p className="Nexusnode">Nexus Node</p>
@@ -38,7 +38,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         <input className="InputS" placeholder="Rechercher un produit" />
                     </div>
                     <div className="PanierN">
-                        <FaBasketShopping size={40} className="Icons" />
+                        <NavLink to="/panier">
+                            <FaBasketShopping size={40} className="Icons" />
+                        </NavLink>
                     </div>
                     <div className="ProfilN"
                          onMouseEnter={() => userRole && setIsProfileMenuOpen(true)}
