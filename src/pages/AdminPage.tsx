@@ -37,7 +37,7 @@ const AdminPage: React.FC = () => {
             <h2 className="titre">Page d'administration</h2>
             <div className="categories">
                 <div className="commandes">
-                    <NavLink to="/commandes">
+                    <NavLink to="/CommandePage">
                         <button>Consulter</button>
                     </NavLink>
                 </div>

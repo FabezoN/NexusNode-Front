@@ -1,7 +1,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import Layout from '../components/Layout/Layout';
 import { NavLink } from 'react-router-dom';
-import { fetchProduits, getCategorie, getCategorieById, saveProduct } from '../class/produit';
+import { fetchProduits, getCategorie, getCategorieById, updateCategorie, addCategorie, deleteCategorie, saveProduct, addProduct } from '../class/produit';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from '../components/Modal/Modal';
@@ -15,6 +15,8 @@ const AdminProduit: React.FC = () => {
     const [showCategorieModal, setShowCategorieModal] = useState<boolean>(false);
     const [selectedCategorie, setSelectedCategorie] = useState<any | null>(null);
     const [newCategorieName, setNewCategorieName] = useState<string>("");
+    const [showAddProductModal, setShowAddProductModal] = useState<boolean>(false);
+    const [newProductFormData, setNewProductFormData] = useState<any>({});
 
     useEffect(() => {
         const initFetch = async () => {
@@ -25,6 +27,7 @@ const AdminProduit: React.FC = () => {
     }, []);
 
     const handleRowClick = (product: any) => {
+        setImageFile(null)
         setSelectedProduct(product);
         setFormData(product);
     };
@@ -35,18 +38,21 @@ const AdminProduit: React.FC = () => {
 
     const handleFormChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> | Date) => {
         if (typeof e === 'object' && e !== null && 'target' in e) {
-            const {name, value} = e.target;
+            const { name, value } = e.target;
             setFormData((prevState: any) => ({
                 ...prevState,
                 [name]: value
             }));
         } else {
+            // Si la date est passée depuis le DatePicker, convertissez-la directement en chaîne de caractères
+            const dateString = e ? e.toISOString() : ''; // Convertir en chaîne de caractères
             setFormData((prevState: any) => ({
                 ...prevState,
-                dateSortie: e ? e.toISOString() : null
+                dateSortie: dateString
             }));
         }
     };
+
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -60,35 +66,43 @@ const AdminProduit: React.FC = () => {
             console.error('Aucun produit sélectionné.');
             return;
         }
-        const updatedProduct = {
-            ...selectedProduct,
-            image: imageFile ? `${formData.idCategorie}_${selectedProduct.idMateriel}` : selectedProduct.image,
-            PATH_Image: imageFile ? `/${formData.libelle}/${formData.idCategorie}_${selectedProduct.idMateriel}` : selectedProduct.PATH_Image,
-            dateSortie: formData.dateSortie || selectedProduct.dateSortie,
-            description: formData.description || selectedProduct.description,
-            prix: formData.prix || selectedProduct.prix,
-            id_Categorie: formData.idCategorie || selectedProduct.id_Categorie,
-            materiel_libelle: formData.materiel_libelle || selectedProduct.materiel_libelle
-        };
 
-        console.log('Produit mis à jour:', updatedProduct);
-        setFormData({});
-        setSelectedProduct(null);
-        setImageFile(null);
+        try {
+            const formData = new FormData(e.currentTarget);
+
+            // Récupérer la valeur de la date depuis le DatePicker et la formater au format souhaité
+            const dateSortie = formData.get('dateSortie') as string; // Récupérer la date au format ISO
+            const formattedDate = dateSortie ? new Date(dateSortie).toLocaleDateString() : ''; // Formater la date
+
+            // Créer un objet JSON à partir des données du formulaire
+            const productData: any = {
+                idMateriel: selectedProduct.idMateriel,
+                libelle: formData.get('libelle')?.toString() || '',
+                description: formData.get('description')?.toString() || '',
+                prix: formData.get('prix')?.toString() || '',
+                dateSortie: formattedDate, // Utiliser la date formatée
+                idCategorie: formData.get('idCategorie')?.toString() || selectedProduct.id_Categorie,
+                image: imageFile !== null ? imageFile : undefined
+            };
+
+            const response = await saveProduct(productData);
+
+            setFormData({});
+            setSelectedProduct(null);
+            setImageFile(null);
+        } catch (error) {
+            console.error('Erreur lors de la modification du produit:', error);
+        }
     };
 
-    const handleCategorieChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        const selectedId = e.target.value;
-        const cat = categorie.find(c => c.idCategorie === selectedId);
-        setSelectedCategorie(cat);
-        setNewCategorieName(cat ? cat.libelle : "");
-    };
 
     const handleSaveCategorie = async () => {
-        if (selectedCategorie) {
-            //await saveCategorie({ ...selectedCategorie, libelle: newCategorieName });
+        if (selectedCategorie[0]) {
+            await updateCategorie(selectedCategorie[0].idCategorie,newCategorieName);
+            setNewCategorieName('');
         } else {
-            //  await saveCategorie({ libelle: newCategorieName });
+            await addCategorie(newCategorieName);
+            setNewCategorieName('');
         }
         setCategorie(await getCategorie());
         setShowCategorieModal(false);
@@ -102,11 +116,25 @@ const AdminProduit: React.FC = () => {
             setNewCategorieName(dataCategorie[0].libelle);
             setSelectedCategorie(dataCategorie);
         } else {
-            setNewCategorieName(''); // Vide le champ si aucune catégorie n'est trouvée
+            setNewCategorieName('');
             setSelectedCategorie(null);
         }
     };
 
+    const handleDeleteCategorie = async () => {
+        if (selectedCategorie) {
+            await deleteCategorie(selectedCategorie[0].idCategorie);
+            setCategorie(await getCategorie());
+            setNewCategorieName('');
+            setSelectedCategorie(null);
+        } else {
+            console.error('Aucune catégorie sélectionnée pour la suppression.');
+        }
+    };
+
+    const toggleAddProductModal = () => {
+        setShowAddProductModal(!showAddProductModal);
+    };
 
     return (
         <Layout>
@@ -114,6 +142,8 @@ const AdminProduit: React.FC = () => {
             <NavLink to="/adminpage">
                 <button>Retour</button>
             </NavLink>
+            <button onClick={toggleAddProductModal}>Ajouter</button>
+
             <table>
                 <thead>
                 <tr>
@@ -130,6 +160,7 @@ const AdminProduit: React.FC = () => {
                         <td>{produit.idMateriel}</td>
                         <td>{produit.materiel_libelle}</td>
                         <td>{produit.prix}</td>
+                        <td>{produit.categorie_libelle}</td>
                         <td>{new Date(produit.dateSortie).toLocaleDateString()}</td>
                     </tr>
                 ))}
@@ -140,7 +171,7 @@ const AdminProduit: React.FC = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="libelle">Libellé:</label>
-                        <input type="text" id="libelle" name="materiel_libelle" value={formData.materiel_libelle}
+                        <input type="text" id="libelle" name="libelle" value={formData.materiel_libelle || ''}
                                onChange={handleFormChange}/>
                     </div>
                     <div className="form-group">
@@ -173,6 +204,7 @@ const AdminProduit: React.FC = () => {
                         <label htmlFor="dateSortie">Date de sortie:</label>
                         <DatePicker
                             id="dateSortie"
+                            name="dateSortie"
                             selected={formData.dateSortie ? new Date(formData.dateSortie) : null}
                             onChange={(date: Date) => handleFormChange(date)}
                             dateFormat="dd/MM/yyyy"
@@ -210,6 +242,9 @@ const AdminProduit: React.FC = () => {
                         onChange={(e) => setNewCategorieName(e.target.value)}
                     />
                     <button type="submit">{selectedCategorie ? 'Modifier' : 'Ajouter'}</button>
+                    <button type="button" onClick={handleDeleteCategorie} disabled={!selectedCategorie}>
+                        Supprimer
+                    </button>
                 </form>
             </Modal>
         </Layout>
