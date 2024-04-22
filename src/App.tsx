@@ -7,7 +7,10 @@ import Login from "./pages/Login";
 import AdminPage from "./pages/AdminPage";
 import CommandesPage from "./pages/CommandesPage";
 import ProduitsPage from "./pages/ProduitsPage";
+import AdminProduit from "./pages/AdminProduit"
+
 import PanierPages from "./pages/PanierPages";
+
 
 const router = createBrowserRouter([
   {
@@ -32,11 +35,18 @@ const router = createBrowserRouter([
     },
     {
         path: '/commandes',
+        element: <Commandes/>
+    },
+    {
+        path:'/AdminProduit',
+        element: <AdminProduit/>
+
         element: <CommandesPage/>
     },
     {
         path: '/panier',
         element: <PanierPages/>
+
     }
 ])
 

@@ -42,7 +42,7 @@ const AdminPage: React.FC = () => {
                     </NavLink>
                 </div>
                 <div className="produits">
-                    <NavLink to="/gestionsProduits">
+                    <NavLink to="/AdminProduit">
                         <button>Produits</button>
                     </NavLink>
 
