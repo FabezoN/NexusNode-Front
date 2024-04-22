@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import AdminPage from "./pages/AdminPage";
 import Commandes from "./pages/commandes";
 import ProduitsPage from "./pages/ProduitsPage";
+import AdminProduit from "./pages/AdminProduit"
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,11 @@ const router = createBrowserRouter([
     {
         path: '/commandes',
         element: <Commandes/>
+    },
+    {
+        path:'/AdminProduit',
+        element: <AdminProduit/>
+
     }
 ])
 
