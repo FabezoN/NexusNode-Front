@@ -34,13 +34,12 @@ const router = createBrowserRouter([
         element: <ProduitsPage/>
     },
     {
-        path: '/commandes',
-        element: <Commandes/>
-    },
-    {
         path:'/AdminProduit',
         element: <AdminProduit/>
 
+    },
+    {
+        path:'/CommandePage',
         element: <CommandesPage/>
     },
     {

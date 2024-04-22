@@ -68,7 +68,7 @@ background:#DADADA;
 
 .ProfileMenu {
     position: absolute;
-    top: 50px; /* Ajuste ceci en fonction de la hauteur de ton icône de profil */
+    top: 44px; /* Ajuste ceci en fonction de la hauteur de ton icône de profil */
     right: 0; /* Ajuste ceci si nécessaire pour aligner avec l'icône de profil */
     left: auto; /* Assure-toi que le menu s'aligne à partir de la droite de l'icône de profil */
     background-color: #f9f9f9;
