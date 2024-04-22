@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './form.css';
 import Logo from '../assets/LogoNexusNode.png';
 import {registerUser} from '../class/user';
+import {NavLink} from "react-router-dom";
 
 const Register: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -17,11 +18,11 @@ const Register: React.FC = () => {
     const [passwordsMatch, setPasswordsMatch] = useState(true);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         if (name === 'confirmPassword') {
-            setFormPassword({ ...formPassword, [name]: value });
+            setFormPassword({...formPassword, [name]: value});
         } else {
-            setFormData({ ...formData, [name]: value });
+            setFormData({...formData, [name]: value});
         }
     };
 
@@ -76,7 +77,9 @@ const Register: React.FC = () => {
                            placeholder="Confirmez le mot de passe"/>
                 </div>
                 {!passwordsMatch && <p style={{color: 'red'}}>Les mots de passe ne correspondent pas.</p>}
-                <button type="submit" className="submit-form">S'inscrire</button>
+                <NavLink to="/login">
+                    <button type="submit" className="submit-form">S'inscrire</button>
+                </NavLink>
             </form>
         </div>
     );

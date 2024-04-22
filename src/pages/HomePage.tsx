@@ -3,7 +3,7 @@ import Layout from "../components/Layout/Layout";
 import { NavLink } from "react-router-dom"; // Import de NavLink
 import './HomePage.css';
 import { fetchProduits } from "../class/produit";
-import {FaBasketShopping} from "react-icons/fa6";
+import AddToCartFunction from "../components/Hooks/AddToCartFunction";
 
 const HomePage: React.FC = () => {
     const [produits, setProduits] = useState<any[]>([]); // État pour stocker les produits
@@ -36,20 +36,22 @@ const HomePage: React.FC = () => {
 
     return (
         <Layout>
-            <h1 className="TitreProduit">Tout nos produits par catégorie</h1>
+            <h1 className="TitreProduits">Tout nos produits par catégorie</h1>
             <div className="AllProduits">
                 {Object.entries(trierProduitsParCategorie()).map(([categorie, produits]) => (
-                    <NavLink key={categorie} to={`/categorieproduit/${produits[0].id_Categorie}`} className="Categorie">
-                        <div>
-                            <h3>{categorie} :</h3> {/* Utilisation du libellé de la catégorie */}
-                            {produits.map(produit => (
-                                <div key={produit.id} className="Produit">
-                                    <p>{produit.materiel_libelle} - {produit.prix} €</p>
-                                    <FaBasketShopping size={20} className="Icons"></FaBasketShopping>
-                                </div>
-                            ))}
-                        </div>
-                    </NavLink>
+                    <div key={categorie} className="Categorie">
+                        <h3>{categorie} :</h3> {/* Utilisation du libellé de la catégorie */}
+                        {produits.map(produit => (
+                            <div key={produit.id} className="Produits">
+                                <p>{produit.materiel_libelle} - {produit.prix} €</p>
+                                <AddToCartFunction productId={produit.idMateriel} selectedQuantity={1} libelleId={produit.materiel_libelle} prix={produit.prix} />
+                            </div>
+                        ))}
+                        {/* Lien vers la page de détails de la catégorie */}
+                        <NavLink to={`/categorieproduit/${produits[0].id_Categorie}`} className="link-to-category-details">
+                            Voir plus
+                        </NavLink>
+                    </div>
                 ))}
             </div>
         </Layout>

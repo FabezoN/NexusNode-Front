@@ -20,6 +20,7 @@ const LoginForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         sessionStorage.clear();
+        localStorage.clear();
         e.preventDefault();
         setErrorMessage('');
         try {

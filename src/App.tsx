@@ -5,9 +5,12 @@ import HomePage from "./pages/HomePage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import AdminPage from "./pages/AdminPage";
-import Commandes from "./pages/commandes";
+import CommandesPage from "./pages/CommandesPage";
 import ProduitsPage from "./pages/ProduitsPage";
 import AdminProduit from "./pages/AdminProduit"
+
+import PanierPages from "./pages/PanierPages";
+
 
 const router = createBrowserRouter([
   {
@@ -37,6 +40,12 @@ const router = createBrowserRouter([
     {
         path:'/AdminProduit',
         element: <AdminProduit/>
+
+        element: <CommandesPage/>
+    },
+    {
+        path: '/panier',
+        element: <PanierPages/>
 
     }
 ])

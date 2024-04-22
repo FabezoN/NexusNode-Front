@@ -92,6 +92,7 @@ background:#DADADA;
 .Icons {
     cursor: pointer;
     transition: color 0.2s;
+    color: black;
 }
 
 .Icons:hover {
