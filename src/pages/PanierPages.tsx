@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Layout from "../components/Layout/Layout";
 import './PanierPages.css'
-import { BsFillTrash3Fill } from "react-icons/bs";
+import {BsFillTrash3Fill} from "react-icons/bs";
+import {FetchAdresse} from "../class/adresse";
 
 interface CartItem {
     id: number;
@@ -12,7 +13,6 @@ interface CartItem {
 
 const PanierPages: React.FC = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
-
     useEffect(() => {
         const cartData = localStorage.getItem("cart");
         if (cartData) {
@@ -22,7 +22,7 @@ const PanierPages: React.FC = () => {
                 const [id, libelle, prixStr] = key.split("/");
                 const prix = parseFloat(prixStr);
                 const quantite = cartObject[key];
-                cartItemsArray.push({ id: parseInt(id), libelle, prix, quantite });
+                cartItemsArray.push({id: parseInt(id), libelle, prix, quantite});
             }
             setCartItems(cartItemsArray);
         }
@@ -47,7 +47,7 @@ const PanierPages: React.FC = () => {
                     return null; // Retourne null pour exclure l'article du panier mis à jour
                 } else {
                     localStorage.setItem(`cart/${item.id}/${item.libelle}/${item.prix}`, updatedQuantite.toString());
-                    return { ...item, quantite: updatedQuantite };
+                    return {...item, quantite: updatedQuantite};
                 }
             }
             return item;
@@ -55,6 +55,39 @@ const PanierPages: React.FC = () => {
         setCartItems(updatedCartItems);
     };
 
+    const [errorMessage, setErrorMessage] = React.useState('');
+    const [AdresseForm, setAdresseData] = useState({
+        rue: '',
+        ville: '',
+        CDP:'',
+        pays:''
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setAdresseData({ ...AdresseForm, [name]: value });
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setErrorMessage('');
+        try {
+            // Envoi des données du formulaire
+            const data =  await FetchAdresse(AdresseForm);
+            const Adresse = JSON.stringify(data);
+            // Réinitialisation du formulaire
+            setAdresseData({
+                rue: '',
+                ville: '',
+                CDP:'',
+                pays:''
+            });
+        } catch (error) {
+            console.error('Erreur lors de la connexion:', error);
+            // Gérer l'erreur ici, par exemple, afficher un message d'erreur à l'utilisateur
+            setErrorMessage('Erreur lors de la connexion. Veuillez réessayer.');
+        }
+    };
     return (
         <Layout>
             <h1 className="TitreProduits">Ma Commande : </h1>
@@ -68,7 +101,7 @@ const PanierPages: React.FC = () => {
                                 <div>Prix unitaire: {item.prix}€</div>
                                 <div className="QuantitéTrash">
                                     <div>Quantité: {item.quantite}</div>
-                                    <BsFillTrash3Fill className="Icons" onClick={() => removeItem(item.id)} />
+                                    <BsFillTrash3Fill className="Icons" onClick={() => removeItem(item.id)}/>
                                 </div>
                                 <div>Total pour cet article: {calculateItemTotal(item)}€</div>
                             </div>
@@ -77,6 +110,25 @@ const PanierPages: React.FC = () => {
                     <div>Total général : {calculateTotal()}€</div>
                 </div>
                 <div className="RightP">
+                    <h3>Adresse de livraison :</h3>
+                    <form className="Formulaire" onSubmit={handleSubmit}>
+                        <div className="object-form2">
+                            <input className="input-form" type="text" id="text" name="text" value={AdresseForm.rue} onChange={handleChange} required placeholder="Pays"/>
+                        </div>
+                        <div className="object-form2">
+                            <input className="input-form" type="text " id="text" name="text"
+                                   value={AdresseForm.ville} onChange={handleChange} required placeholder="Ville"/>
+                        </div>
+                        <div className="object-form2">
+                            <input className="input-form" type="text " id="text" name="text"
+                                   value={AdresseForm.CDP} onChange={handleChange} required placeholder="Code Postal"/>
+                        </div>
+                        <div className="object-form2">
+                            <input className="input-form" type="text " id="text" name="text"
+                                   value={AdresseForm.pays} onChange={handleChange} required placeholder="Rue"/>
+                        </div>
+                        <button type="submit">Confirmer mon adresse</button>
+                    </form>
                 </div>
             </div>
         </Layout>
