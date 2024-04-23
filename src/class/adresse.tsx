@@ -3,10 +3,11 @@ interface AdresseData {
     ville: string;
     CDP: string;
     Pays: string;
+    user: number;
 }
 
 
-export async function FetchAdresse(Adressedata: { ville: string; rue: string; CDP: string; pays: string }) {
+export async function FetchAdresse(Adressedata: { rue: string; ville: string; CDP: string; pays: string,userID: number  | undefined}) {
     try {
         const response = await fetch('http://localhost:3000/adresse/', {
             method: 'POST',
@@ -22,7 +23,7 @@ export async function FetchAdresse(Adressedata: { ville: string; rue: string; CD
 
         const result = await response.json();
         console.log(result);
-        alert('Adresse ajouté abecc succès');
+        alert('Adresse ajouté avec succès');
     } catch (error: any) { // Spécifier le type d'erreur comme `any`
         console.error('Erreur lors de l\'ajout de l\'adresse', error);
         alert(error.message);
