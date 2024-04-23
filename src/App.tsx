@@ -7,7 +7,10 @@ import Login from "./pages/Login";
 import AdminPage from "./pages/AdminPage";
 import CommandesPage from "./pages/CommandesPage";
 import ProduitsPage from "./pages/ProduitsPage";
-import AdminProduit from "./pages/AdminProduit"
+import AdminProduit from "./pages/AdminProduit";
+import ERROR from "./pages/ERROR";
+import Statistique from "./pages/Statistique";
+
 
 import PanierPages from "./pages/PanierPages";
 
@@ -46,7 +49,16 @@ const router = createBrowserRouter([
         path: '/panier',
         element: <PanierPages/>
 
-    }
+    },
+    {
+        path:'/error404',
+        element: <ERROR/>
+    },
+    {
+        path:'/statistique',
+        element: <Statistique/>
+    },
+
 ])
 
 function App() {
