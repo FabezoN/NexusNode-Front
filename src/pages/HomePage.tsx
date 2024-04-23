@@ -6,7 +6,7 @@ import { fetchProduits } from "../class/produit";
 import AddToCartFunction from "../components/Hooks/AddToCartFunction";
 
 const HomePage: React.FC = () => {
-    const [produits, setProduits] = useState<any[]>([]); // État pour stocker les produits
+    const [produits, setProduits] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchProduitsdata = async () => {
@@ -36,7 +36,7 @@ const HomePage: React.FC = () => {
 
     return (
         <Layout>
-            <h1 className="TitreProduits">Tout nos produits par catégorie</h1>
+            <h1 className="TitreProduits">Tous nos produits par catégorie</h1>
             <div className="AllProduits">
                 {Object.entries(trierProduitsParCategorie()).map(([categorie, produits]) => (
                     <div key={categorie} className="Categorie">
