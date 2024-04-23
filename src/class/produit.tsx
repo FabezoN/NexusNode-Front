@@ -162,7 +162,20 @@ export async function saveProduct(formData: ProductFormData) {
 }
 export async function addProduct(formData: ProductFormData) {
   try{
-        const response = await axios.patch(`http://localhost:3000/materiel/`, formData, {
+        const response = await axios.post(`http://localhost:3000/materiel/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de la modification du produit:', error);
+    }
+}
+
+export async function deleteProduct(idProduit: string) {
+    try{
+        const response = await axios.delete(`http://localhost:3000/materiel/${idProduit}`,{
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
