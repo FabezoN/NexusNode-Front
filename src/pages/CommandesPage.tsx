@@ -29,7 +29,7 @@ const CommandesPage: React.FC = () => {
         if (storage) {
             const userObject = JSON.parse(storage);
             if (userObject.info.role !== 2) {
-                navigate('/');
+                navigate('/error404');
                 return;
             }
         } else {

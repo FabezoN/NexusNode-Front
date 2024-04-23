@@ -26,17 +26,20 @@ const LoginForm: React.FC = () => {
         try {
             // Envoi des données du formulaire
            const data =  await loginUser(LoginForm);
-           const user = JSON.stringify(data);
-            // Réinitialisation du formulaire
-            sessionStorage.setItem('user', user);
-            setFormData({
-                email: '',
-                password: ''
-            });
-            navigate('/');
+           if(data !== undefined){
+               const user = JSON.stringify(data);
+               // Réinitialisation du formulaire
+               sessionStorage.setItem('user', user);
+               setFormData({
+                   email: '',
+                   password: ''
+               });
+               navigate('/');
+           }
+
         } catch (error) {
             console.error('Erreur lors de la connexion:', error);
-            // Gérer l'erreur ici, par exemple, afficher un message d'erreur à l'utilisateur
+            navigate('/login');
             setErrorMessage('Erreur lors de la connexion. Veuillez réessayer.');
         }
     };
