@@ -15,8 +15,9 @@ interface  LoginForm {
 }
 
 export async function registerUser(formData: FormData) {
+    console.log("coucou")
     try {
-        const response = await fetch(`${URL_API}/users/sign-up`, {
+        const response = await fetch(`http://localhost:3000/users/sign-up`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -40,7 +41,7 @@ export async function registerUser(formData: FormData) {
 export async function loginUser(loginForm: LoginForm) {
     console.log(loginForm);
     try {
-        const response = await fetch(`${URL_API}/users/sign-in`, {
+        const response = await fetch(`http://localhost:3000/users/sign-in`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

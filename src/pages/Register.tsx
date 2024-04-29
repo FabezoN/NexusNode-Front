@@ -2,9 +2,13 @@ import React, {useState} from 'react';
 import './form.css';
 import Logo from '../assets/LogoNexusNode.png';
 import {registerUser} from '../class/user';
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 
 const Register: React.FC = () => {
+
+
+    const navigate = useNavigate(); // Utilise useNavigate pour la navigation
+
     const [formData, setFormData] = useState({
         nom: '',
         prenom: '',
@@ -28,6 +32,7 @@ const Register: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        console.log('handle submit start ')
         if (formData.password === formPassword.confirmPassword) {
             registerUser(formData);
             // Réinitialisation du formulaire
@@ -42,6 +47,7 @@ const Register: React.FC = () => {
                 confirmPassword: '',
             });
             setPasswordsMatch(true);
+            navigate('/login');
         } else {
             setPasswordsMatch(false);
         }
@@ -77,9 +83,8 @@ const Register: React.FC = () => {
                            placeholder="Confirmez le mot de passe"/>
                 </div>
                 {!passwordsMatch && <p style={{color: 'red'}}>Les mots de passe ne correspondent pas.</p>}
-                <NavLink to="/login">
                     <button type="submit" className="submit-form">S'inscrire</button>
-                </NavLink>
+
             </form>
         </div>
     );

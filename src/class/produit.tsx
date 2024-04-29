@@ -146,7 +146,7 @@ interface ProductFormData {
 }
 
 
-export async function saveProduct(formData: ProductFormData) {
+export async function updateProduct(formData: ProductFormData) {
     try {
         console.log(formData)
         const idMateriel = formData.idMateriel

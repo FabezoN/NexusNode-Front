@@ -1,7 +1,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import Layout from '../components/Layout/Layout';
 import { NavLink } from 'react-router-dom';
-import { fetchProduits, getCategorie, getCategorieById, updateCategorie, addCategorie, deleteCategorie, saveProduct, addProduct, deleteProduct } from '../class/produit';
+import { fetchProduits, getCategorie, getCategorieById, updateCategorie, addCategorie, deleteCategorie, updateProduct, addProduct, deleteProduct } from '../class/produit';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from '../components/Modal/Modal';
@@ -85,7 +85,7 @@ const AdminProduit: React.FC = () => {
                 image: imageFile !== null ? imageFile : undefined
             };
 
-            const response = await saveProduct(productData);
+            const response = await updateProduct(productData);
 
             setFormData({});
             setSelectedProduct(null);
