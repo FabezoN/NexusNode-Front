@@ -18,12 +18,9 @@ const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSucce
         try {
             const formattedDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
             const etat = "Réussi";
-            // Appeler FetchPaiement et capturer la réponse
             const paiementResponse = await FetchPaiement({ datePaiement: formattedDate, Etat: etat });
-
-            // Vérifier si la réponse est un tableau non vide et extraire l'ID du premier élément
-            if (Array.isArray(paiementResponse) && paiementResponse.length > 0) {
-                const idPaiement = paiementResponse[0].idPaiement;
+            if (paiementResponse && paiementResponse.idPaiement) {
+                const idPaiement = paiementResponse.idPaiement;
                 const nomfacture = "NomF";
                 const CheminFacture = "CheminF";
                 await PostCommande({ dateCommande: formattedDate, nomFacture: nomfacture, cheminFacture: CheminFacture, idPaiement: idPaiement, idAdresse: 1, idUser: 1 });

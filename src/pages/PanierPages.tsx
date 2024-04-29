@@ -86,8 +86,7 @@ const PanierPages: React.FC = () => {
         setErrorMessage(''); // Réinitialiser le message d'erreur
 
         try {
-            const data = await FetchAdresse(AdresseForm);
-            const Adresse = JSON.stringify(data);
+            const Adresse = await FetchAdresse(AdresseForm);
             console.log('Adresse ajoutée avec succès:', Adresse);
             setShowModal(true);
         } catch (error) {
