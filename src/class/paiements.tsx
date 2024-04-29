@@ -7,11 +7,9 @@ export async function FetchPaiement(PaiementData: { datePaiement: string, Etat: 
             },
             body: JSON.stringify(PaiementData),
         });
-
         if (!response.ok) {
             throw new Error('Echec du paiement');
         }
-
         const result = await response.json();
         console.log(result);
     } catch (error: any) { // Spécifier le type d'erreur comme `any`

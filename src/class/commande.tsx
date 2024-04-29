@@ -45,3 +45,24 @@ export async function fetchTotalCommande(year: number) {
         console.error('Erreur lors de la récupération des commandes:', error);
     }
 }
+
+export async function PostCommande(CommandeData: { dateCommande: string, nomFacture: string ,cheminFacture: string,idPaiement:number,idAdresse:number,idUser:number }) {
+    try {
+        const response = await fetch('http://localhost:3000/commande/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(CommandeData),
+        });
+        if (!response.ok) {
+            throw new Error('Echec de l\'ajout de la commande');
+        }
+        const result = await response.json();
+        console.log(result);
+    } catch (error: any) { // Spécifier le type d'erreur comme `any`
+        console.error('Erreur de l\'ajout de la commande', error);
+        alert(error.message);
+    }
+}
+
