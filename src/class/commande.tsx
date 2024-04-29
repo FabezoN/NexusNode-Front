@@ -59,7 +59,6 @@ export async function PostCommande(CommandeData: { dateCommande: string, nomFact
             throw new Error('Echec de l\'ajout de la commande');
         }
         const result = await response.json();
-        console.log(result);
     } catch (error: any) { // Spécifier le type d'erreur comme `any`
         console.error('Erreur de l\'ajout de la commande', error);
         alert(error.message);
