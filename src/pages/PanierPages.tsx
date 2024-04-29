@@ -3,6 +3,7 @@ import Layout from "../components/Layout/Layout";
 import './PanierPages.css';
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { FetchAdresse } from "../class/adresse";
+import ModalePaiement from "./ModalePaiement";
 
 interface CartItem {
     id: number;
@@ -13,6 +14,7 @@ interface CartItem {
 
 const PanierPages: React.FC = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [showModal, setShowModal] = useState(false);
     useEffect(() => {
         const cartData = localStorage.getItem("cart");
         if (cartData) {
@@ -79,22 +81,17 @@ const PanierPages: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); // Empêcher le comportement par défaut du formulaire
-
         setErrorMessage(''); // Réinitialiser le message d'erreur
-
         try {
             const data = await FetchAdresse(AdresseForm);
             const Adresse = JSON.stringify(data);
-
-            // Ne pas réinitialiser AdresseForm ici, pour éviter de vider les champs
-
             console.log('Adresse ajoutée avec succès:', Adresse);
+            setShowModal(true); // Ouvrir la modale après la soumission réussie
         } catch (error) {
             console.error('Erreur lors de la connexion:', error);
             setErrorMessage('Erreur lors de la connexion. Veuillez réessayer.');
         }
     };
-
     return (
         <Layout>
             <h1 className="TitreProduits">Ma Commande : </h1>
@@ -122,8 +119,7 @@ const PanierPages: React.FC = () => {
                         <div className="object-form2">
                             <input className="input-form" type="text" id="rue" name="rue" value={AdresseForm.rue} onChange={handleChange} required placeholder="Rue" />
                         </div>
-                        <div className="object-form2">
-                            <input className="input-form" type="text" id="ville" name="ville" value={AdresseForm.ville} onChange={handleChange} required placeholder="Ville" />
+                        <div className="object-form2"><input className="input-form" type="text" id="ville" name="ville" value={AdresseForm.ville} onChange={handleChange} required placeholder="Ville" />
                         </div>
                         <div className="object-form2">
                             <input className="input-form" type="text" id="CDP" name="CDP" value={AdresseForm.CDP} onChange={handleChange} required placeholder="Code Postal" />
@@ -131,7 +127,8 @@ const PanierPages: React.FC = () => {
                         <div className="object-form2">
                             <input className="input-form" type="text" id="pays" name="pays" value={AdresseForm.pays} onChange={handleChange} required placeholder="Pays" />
                         </div>
-                        <button type="submit">Confirmer mon adresse et payer</button>
+                        <button type="submit" >Confirmer mon adresse et payer</button>
+                        {showModal && <ModalePaiement onClose={() => setShowModal(false)} />}
                     </form>
                 </div>
             </div>
