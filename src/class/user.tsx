@@ -1,4 +1,6 @@
-// Définir une interface pour les données du formulaire
+import {URL_API} from '../env'
+
+
 interface FormData {
     email: string;
     prenom: string;
@@ -14,7 +16,7 @@ interface  LoginForm {
 
 export async function registerUser(formData: FormData) {
     try {
-        const response = await fetch('http://localhost:3000/users/sign-up', {
+        const response = await fetch(`${URL_API}/users/sign-up`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -38,7 +40,7 @@ export async function registerUser(formData: FormData) {
 export async function loginUser(loginForm: LoginForm) {
     console.log(loginForm);
     try {
-        const response = await fetch('http://localhost:3000/users/sign-in', {
+        const response = await fetch(`${URL_API}/users/sign-in`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

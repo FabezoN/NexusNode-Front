@@ -1,8 +1,8 @@
 import axios from "axios";
-
+import {URL_API} from '../env'
 export async function fetchProduits() {
     try {
-        const response = await fetch('http://localhost:3000/materiel/', {
+        const response = await fetch(`${URL_API}/materiel`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export async function addCategorie(libelle: string) {
         "libelle": libelle,
     }
     try {
-        const response = await fetch('http://localhost:3000/categorie/', {
+        const response = await fetch(`${URL_API}/categorie/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export async function addCategorie(libelle: string) {
 
     }
         try {
-            const response = await fetch('http://localhost:3000/categorie/', {
+            const response = await fetch(`${URL_API}/categorie/`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ export async function addCategorie(libelle: string) {
 
 export async function fetchProduitsCategorie(idCategorie: string) {
     try {
-        const response = await fetch(`http://localhost:3000/materiel/${idCategorie}`, {
+        const response = await fetch(`${URL_API}/materiel/${idCategorie}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ export async function fetchProduitsCategorie(idCategorie: string) {
 }
 export async function deleteCategorie(idCategorie: string) {
     try {
-        const response = await fetch(`http://localhost:3000/categorie/${idCategorie}`, {
+        const response = await fetch(`${URL_API}/categorie/${idCategorie}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ export async function deleteCategorie(idCategorie: string) {
 }
 export async function getCategorie() {
     try {
-        const response = await fetch('http://localhost:3000/categorie/', {
+        const response = await fetch(`${URL_API}/categorie/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -150,7 +150,7 @@ export async function saveProduct(formData: ProductFormData) {
     try {
         console.log(formData)
         const idMateriel = formData.idMateriel
-        const response = await axios.patch(`http://localhost:3000/materiel/${idMateriel}`, formData, {
+        const response = await axios.patch(`${URL_API}/materiel/${idMateriel}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -162,7 +162,7 @@ export async function saveProduct(formData: ProductFormData) {
 }
 export async function addProduct(formData: ProductFormData) {
   try{
-        const response = await axios.post(`http://localhost:3000/materiel/`, formData, {
+        const response = await axios.post(`${URL_API}/materiel/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -175,7 +175,7 @@ export async function addProduct(formData: ProductFormData) {
 
 export async function deleteProduct(idProduit: string) {
     try{
-        const response = await axios.delete(`http://localhost:3000/materiel/${idProduit}`,{
+        const response = await axios.delete(`${URL_API}/materiel/${idProduit}`,{
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -190,7 +190,7 @@ export async function deleteProduct(idProduit: string) {
 
 export async function getCategorieById(idCat: string){
     try {
-        const response = await fetch(`http://localhost:3000/categorie/${idCat}`, {
+        const response = await fetch(`${URL_API}/categorie/${idCat}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
