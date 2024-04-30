@@ -1,3 +1,37 @@
 .titre {
     padding-left: 2em;
 }
+.categories{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.buttonsCate{
+    margin: 3em 0 0 0;
+}
+
+.CategoBtn{
+    width: 25em;
+}
+
+.SelectAnnée{
+    border-radius: 1em;
+}
+
+.TotalCommande{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.AnnéeCours{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.ChiffreAff{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
