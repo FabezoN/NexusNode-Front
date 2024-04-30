@@ -3,6 +3,7 @@ import Layout from "../components/Layout/Layout";
 import './PanierPages.css';
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { FetchAdresse } from "../class/adresse";
+import ModalePaiement from "./ModalePaiement";
 
 interface CartItem {
     id: number;
@@ -13,6 +14,10 @@ interface CartItem {
 
 const PanierPages: React.FC = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [showModal, setShowModal] = useState(false);
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
+    const [Adressesid, setAdressesid] = useState<number >(0);
+    const [iduser, setIduser] = useState<number>(0);
     useEffect(() => {
         const cartData = localStorage.getItem("cart");
         if (cartData) {
@@ -56,13 +61,19 @@ const PanierPages: React.FC = () => {
 
     const [errorMessage, setErrorMessage] = useState('');
 
-    let userID: number | undefined;
+    let userID: number | undefined = undefined;
 
     const storage = sessionStorage.getItem('user');
     if (storage) {
         const userObject = JSON.parse(storage);
         userID = Number(userObject.info.id);
     }
+
+    useEffect(() => {
+        if (userID !== undefined) {
+            setIduser(userID);
+        }
+    }, [userID]);
 
     const [AdresseForm, setAdresseData] = useState({
         rue: '',
@@ -72,29 +83,33 @@ const PanierPages: React.FC = () => {
         userID: userID
     });
 
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setAdresseData({ ...AdresseForm, [name]: value });
     };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); // Empêcher le comportement par défaut du formulaire
 
         setErrorMessage(''); // Réinitialiser le message d'erreur
 
         try {
-            const data = await FetchAdresse(AdresseForm);
-            const Adresse = JSON.stringify(data);
-
-            // Ne pas réinitialiser AdresseForm ici, pour éviter de vider les champs
-
-            console.log('Adresse ajoutée avec succès:', Adresse);
+            const Adresse = await FetchAdresse(AdresseForm);
+            setAdressesid(Adresse.idAdresse);
+            setShowModal(true);
         } catch (error) {
             console.error('Erreur lors de la connexion:', error);
             setErrorMessage('Erreur lors de la connexion. Veuillez réessayer.');
         }
     };
+    const handlePaymentSuccess = () => {
+        setPaymentSuccess(true);
+        setShowModal(false);
+    };
 
+    const handlePaymentCancel = () => {
+        setShowModal(false);
+    };
     return (
         <Layout>
             <h1 className="TitreProduits">Ma Commande : </h1>
@@ -133,6 +148,8 @@ const PanierPages: React.FC = () => {
                         </div>
                         <button type="submit">Confirmer mon adresse et payer</button>
                     </form>
+                    {showModal && <ModalePaiement onClose={handlePaymentCancel} onPaymentSuccess={handlePaymentSuccess} idAdresse={Adressesid} idUser={iduser}/>}
+                    {paymentSuccess}
                 </div>
             </div>
         </Layout>
