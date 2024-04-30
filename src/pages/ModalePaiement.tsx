@@ -7,13 +7,14 @@ interface ModalePaiementProps {
     onClose: () => void;
     onPaymentSuccess: (idAdresse: number) => void;
     idAdresse: number;
+    idUser: number;
 }
 
-const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSuccess, idAdresse }) => { // Ajouter idAdresse comme argument
+const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSuccess, idAdresse,idUser }) => { // Ajouter idAdresse comme argument
     const [cardNumber, setCardNumber] = useState("");
     const [cvv, setCvv] = useState("");
     const [expiryDate, setExpiryDate] = useState("");
-
+    console.log(idAdresse);
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -24,9 +25,9 @@ const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSucce
                 const idPaiement = paiementResponse.idPaiement;
                 const nomfacture = "NomF";
                 const CheminFacture = "CheminF";
-                await PostCommande({ dateCommande: formattedDate, nomFacture: nomfacture, cheminFacture: CheminFacture, idPaiement: idPaiement, idAdresse: idAdresse, idUser: 1 });
+                await PostCommande({ dateCommande: formattedDate, nomFacture: nomfacture, cheminFacture: CheminFacture, idPaiement: idPaiement, idAdresse: idAdresse, idUser: idUser });
                 onClose();
-                onPaymentSuccess(idAdresse); // Appeler onPaymentSuccess avec l'idAdresse
+                onPaymentSuccess(idAdresse);
             } else {
                 throw new Error("La réponse de FetchPaiement est vide ou ne contient pas d'éléments.");
             }

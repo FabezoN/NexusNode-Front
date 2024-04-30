@@ -16,7 +16,8 @@ const PanierPages: React.FC = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
-    const [Adressesid, setAdressesid] = useState<number >(1);
+    const [Adressesid, setAdressesid] = useState<number >(0);
+    const [iduser, setIduser] = useState<number>(0);
     useEffect(() => {
         const cartData = localStorage.getItem("cart");
         if (cartData) {
@@ -60,13 +61,19 @@ const PanierPages: React.FC = () => {
 
     const [errorMessage, setErrorMessage] = useState('');
 
-    let userID: number | undefined;
+    let userID: number | undefined = undefined;
 
     const storage = sessionStorage.getItem('user');
     if (storage) {
         const userObject = JSON.parse(storage);
         userID = Number(userObject.info.id);
     }
+
+    useEffect(() => {
+        if (userID !== undefined) {
+            setIduser(userID);
+        }
+    }, [userID]);
 
     const [AdresseForm, setAdresseData] = useState({
         rue: '',
@@ -75,6 +82,7 @@ const PanierPages: React.FC = () => {
         pays: '',
         userID: userID
     });
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -87,10 +95,7 @@ const PanierPages: React.FC = () => {
 
         try {
             const Adresse = await FetchAdresse(AdresseForm);
-            console.log('Adresse ajoutée avec succès:', Adresse.idAdresse);
-            console.log(Adresse.idAdresse);
             setAdressesid(Adresse.idAdresse);
-            console.log(Adressesid);
             setShowModal(true);
         } catch (error) {
             console.error('Erreur lors de la connexion:', error);
@@ -143,7 +148,7 @@ const PanierPages: React.FC = () => {
                         </div>
                         <button type="submit">Confirmer mon adresse et payer</button>
                     </form>
-                    {showModal && <ModalePaiement onClose={handlePaymentCancel} onPaymentSuccess={handlePaymentSuccess} idAdresse={Adressesid} />}
+                    {showModal && <ModalePaiement onClose={handlePaymentCancel} onPaymentSuccess={handlePaymentSuccess} idAdresse={Adressesid} idUser={iduser}/>}
                     {paymentSuccess}
                 </div>
             </div>
