@@ -21,11 +21,26 @@ const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSucce
             const formattedDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
             const etat = "Réussi";
             const paiementResponse = await FetchPaiement({ datePaiement: formattedDate, Etat: etat });
+
             if (paiementResponse && paiementResponse.idPaiement) {
+                // Génération du nom de la facture
+                const userStorage = sessionStorage.getItem("user");
+                let nomFacture = "";
+
+                if (userStorage) {
+                    const userObject = JSON.parse(userStorage);
+                    const nom = userObject.info.nom;
+                    const date = new Date();
+                    const formattedDate = date.toISOString().replace(/-/g, "").replace(/:/g, "").replace(".", "").replace("T", ""); // Formatage de la date pour enlever les caractères spéciaux
+                    nomFacture = `${nom}_${formattedDate}`;
+                } else {
+                    throw new Error("Données utilisateur introuvables dans le stockage de session.");
+                }
+
                 const idPaiement = paiementResponse.idPaiement;
-                const nomfacture = "NomF";
-                const CheminFacture = "CheminF";
-                await PostCommande({ dateCommande: formattedDate, nomFacture: nomfacture, cheminFacture: CheminFacture, idPaiement: idPaiement, idAdresse: idAdresse, idUser: idUser });
+                const cheminFacture = `/facture/${nomFacture}.pdf`;
+
+                await PostCommande({ dateCommande: formattedDate, nomFacture, cheminFacture, idPaiement, idAdresse, idUser });
                 onClose();
                 onPaymentSuccess(idAdresse);
             } else {
@@ -35,6 +50,12 @@ const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSucce
             console.error("Erreur lors du paiement:", error);
         }
     };
+
+
+
+
+
+
 
     return (
         <div className="modal2">
