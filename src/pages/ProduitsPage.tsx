@@ -4,6 +4,7 @@ import Layout from "../components/Layout/Layout";
 import { fetchProduitsCategorie } from "../class/produit";
 import './ProduitPage.css';
 import AddToCartFunction from "../components/Hooks/AddToCartFunction";
+import Logo from "../assets/LogoNexusNode.png";
 
 const ProduitsPage: React.FC = () => {
     const [produitdetails, setProduitdetails] = useState<any[]>([]);
@@ -29,26 +30,28 @@ const ProduitsPage: React.FC = () => {
         };
         fetchProduitsDetailData();
     }, [id]);
-
     return (
         <Layout>
             <h1 className="TitreProduit">Nos produits {categorieNom && ` - ${categorieNom}`}</h1>
             <div className="ProduitParCatégories">
-                {produitdetails.map((produit, index) => (
-                    <div key={index} className="Produit">
-                        <h3 className="NomProduit">{produit.libelle}</h3>
-                        <p className="Description">Description : {produit.description}</p>
-                        <p>Prix : {produit.prix} €</p>
-                        <div className="AjoutPanier">
-                            <select className="SelectProduits" onChange={(e) => setSelectedQuantity(parseInt(e.target.value))}>
-                                {Array.from(Array(9).keys()).map((value, index) => (
-                                    <option key={index} value={value + 1}>{value + 1}</option>
-                                ))}
-                            </select>
-                            <AddToCartFunction productId={produit.idMateriel} selectedQuantity={selectedQuantity} libelleId={produit.libelle} prix={produit.prix} />
+                {produitdetails.map((produit, index) => {
+                    return (
+                        <div key={index} className="Produit">
+                            <h3 className="NomProduit">{produit.libelle}</h3>
+                            <img alt="ImageProduit" src={`http://localhost:3000/${produit.PATH_Image}`} />
+                            <p className="Description">Description : {produit.description}</p>
+                            <p>Prix : {produit.prix} €</p>
+                            <div className="AjoutPanier">
+                                <select className="SelectProduits" onChange={(e) => setSelectedQuantity(parseInt(e.target.value))}>
+                                    {Array.from(Array(9).keys()).map((value, index) => (
+                                        <option key={index} value={value + 1}>{value + 1}</option>
+                                    ))}
+                                </select>
+                                <AddToCartFunction productId={produit.idMateriel} selectedQuantity={selectedQuantity} libelleId={produit.libelle} prix={produit.prix} />
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </Layout>
     );

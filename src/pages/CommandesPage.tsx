@@ -69,7 +69,6 @@ const CommandesPage: React.FC = () => {
         commande.NomClient.toString().includes(search)
 
     );
-    console.log(commandes);
     return (
         <Layout>
             <div>
