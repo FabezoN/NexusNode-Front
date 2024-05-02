@@ -32,7 +32,7 @@ const Register: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('handle submit start ')
+        //console.log('handle submit start ')
         if (formData.password === formPassword.confirmPassword) {
             registerUser(formData);
             // Réinitialisation du formulaire

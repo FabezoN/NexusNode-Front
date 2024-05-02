@@ -129,7 +129,7 @@ const AdminProduit: React.FC = () => {
 // Fonction pour gérer la soumission du formulaire
     const handleAddProductSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Données du nouveau produit :', newProductData);
+        //console.log('Données du nouveau produit :', newProductData);
 
         // Obtenir la date actuelle
         const currentDate = new Date();
@@ -141,7 +141,7 @@ const AdminProduit: React.FC = () => {
             ...newProductData,
             dateSortie: formattedDate
         };
-        console.log('Données du nouveau produit :', updatedProductData);
+        //console.log('Données du nouveau produit :', updatedProductData);
 
 
         const result = await addProduct(updatedProductData);

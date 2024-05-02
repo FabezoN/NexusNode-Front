@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import './ModalePaiement.css';
 import { FetchPaiement } from "../class/paiements";
 import { PostCommande } from "../class/commande";
+import {URL_API} from '../env'
+import {useNavigate} from "react-router-dom";
+
 
 interface ModalePaiementProps {
     onClose: () => void;
@@ -14,7 +17,8 @@ const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSucce
     const [cardNumber, setCardNumber] = useState("");
     const [cvv, setCvv] = useState("");
     const [expiryDate, setExpiryDate] = useState("");
-    console.log(idAdresse);
+    const navigate = useNavigate(); // Utilise useNavigate pour la navigation
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -38,11 +42,17 @@ const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSucce
                 }
 
                 const idPaiement = paiementResponse.idPaiement;
-                const cheminFacture = `/facture/${nomFacture}.pdf`;
+                const cheminFacture = `/factures/${nomFacture}.pdf`;
 
                 await PostCommande({ dateCommande: formattedDate, nomFacture, cheminFacture, idPaiement, idAdresse, idUser });
-                onClose();
-                onPaymentSuccess(idAdresse);
+                onClose(); // Supposons que onClose est une fonction pour fermer le formulaire de paiement
+                localStorage.clear();
+                onPaymentSuccess(idAdresse); // Supposons que c'est une fonction de gestion après paiement réussi
+                const pathFacture = `${URL_API}/Factures/${nomFacture}.pdf`
+                // Ouverture de la nouvelle fenêtre avec la facture PDF
+                navigate('/panier');
+
+                window.open(pathFacture, '_blank');
             } else {
                 throw new Error("La réponse de FetchPaiement est vide ou ne contient pas d'éléments.");
             }
@@ -50,6 +60,7 @@ const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSucce
             console.error("Erreur lors du paiement:", error);
         }
     };
+
 
 
 

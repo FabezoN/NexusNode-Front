@@ -1,3 +1,5 @@
+import { URL_API } from "../env";
+
 interface AdresseData {
     rue: string;
     ville: string;
@@ -10,7 +12,7 @@ interface AdresseData {
 export async function FetchAdresse(Adressedata: { rue: string; ville: string; CDP: string; pays: string,userID: number  | undefined}) {
     let result = null;
     try {
-        const response = await fetch('http://localhost:3000/adresse/', {
+        const response = await fetch(`${URL_API}/adresse/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
