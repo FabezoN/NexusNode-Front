@@ -29,7 +29,7 @@ const Statistique: React.FC = () => {
             try {
                 const commandeData = await fetchTotalCommande(year);
                 const salesData = await fetchTotalSales(year);
-                console.log(salesData);
+                //console.log(salesData);
                 setTotalCommande(commandeData.nbCommande);
                 setProductStats(salesData);
             } catch (error) {

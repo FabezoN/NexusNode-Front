@@ -23,7 +23,7 @@ const AdminPage: React.FC = () => {
         const fetchData = async () => {
             try {
                 const data = await fetchCommandes();
-                console.log('Données des commandes:', data);
+               // console.log('Données des commandes:', data);
             } catch (error) {
                 console.error('Erreur lors de la récupération des commandes:', error);
             }

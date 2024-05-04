@@ -1,7 +1,9 @@
+import {URL_API} from '../env'
+
 export async function FetchPaiement(PaiementData: { datePaiement: string, Etat: string }) {
     let result = null;
     try {
-        const response = await fetch('http://localhost:3000/paiement/', {
+        const response = await fetch(`${URL_API}/paiement/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

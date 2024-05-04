@@ -69,7 +69,7 @@ export async function addCategorie(libelle: string) {
             }
 
             const result = await response.json();
-            console.log(result);
+           // console.log(result);
             alert('Catégorie modifié avec succès!');
         } catch (error: any) { // Spécifier le type d'erreur comme `any`
             console.error('Erreur lors de la modification de la catégorie', error);
@@ -148,7 +148,7 @@ interface ProductFormData {
 
 export async function updateProduct(formData: ProductFormData) {
     try {
-        console.log(formData)
+        //console.log(formData)
         const idMateriel = formData.idMateriel
         const response = await axios.patch(`${URL_API}/materiel/${idMateriel}`, formData, {
             headers: {
