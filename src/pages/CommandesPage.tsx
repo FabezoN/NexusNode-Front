@@ -15,6 +15,7 @@ interface ICommande {
     AdresseLivraison: string;
     DetailsProduits: string;
     NomClient: string;
+    cheminFacture: string;
 }
 
 const CommandesPage: React.FC = () => {
@@ -40,6 +41,7 @@ const CommandesPage: React.FC = () => {
         const fetchData = async () => {
             try {
                 const allCommandes = await fetchCommandes();
+                console.log(allCommandes)
                 setCommandes(allCommandes);
             } catch (error) {
                 console.error('Erreur lors de la récupération des commandes:', error);
@@ -100,7 +102,7 @@ const CommandesPage: React.FC = () => {
                                 <button onClick={() => handleDetailsClick(commande)}>
                                     Voir Détails
                                 </button>
-                                <BsFiletypePdf size={20} className='Icon' onClick={() => viewPDF(commande.DetailsProduits)}/>
+                                <BsFiletypePdf size={20} className='Icon' onClick={() => viewPDF(commande.cheminFacture)}/>
                             </td>
                         </tr>
                     ))}
