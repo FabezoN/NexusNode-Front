@@ -5,10 +5,7 @@ import {registerUser} from '../class/user';
 import {NavLink, useNavigate} from "react-router-dom";
 
 const Register: React.FC = () => {
-
-
-    const navigate = useNavigate(); // Utilise useNavigate pour la navigation
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         nom: '',
         prenom: '',
@@ -32,10 +29,8 @@ const Register: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('handle submit start ')
         if (formData.password === formPassword.confirmPassword) {
             registerUser(formData);
-            // Réinitialisation du formulaire
             setFormData({
                 nom: '',
                 prenom: '',
@@ -52,7 +47,6 @@ const Register: React.FC = () => {
             setPasswordsMatch(false);
         }
     };
-
     return (
         <div className="Register">
             <div className="TopForm">

@@ -10,11 +10,10 @@ interface ModalePaiementProps {
     idUser: number;
 }
 
-const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSuccess, idAdresse,idUser }) => { // Ajouter idAdresse comme argument
+const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSuccess, idAdresse,idUser }) => {
     const [cardNumber, setCardNumber] = useState("");
     const [cvv, setCvv] = useState("");
     const [expiryDate, setExpiryDate] = useState("");
-    console.log(idAdresse);
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -23,7 +22,6 @@ const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSucce
             const paiementResponse = await FetchPaiement({ datePaiement: formattedDate, Etat: etat });
 
             if (paiementResponse && paiementResponse.idPaiement) {
-                // Génération du nom de la facture
                 const userStorage = sessionStorage.getItem("user");
                 let nomFacture = "";
 
@@ -31,7 +29,7 @@ const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSucce
                     const userObject = JSON.parse(userStorage);
                     const nom = userObject.info.nom;
                     const date = new Date();
-                    const formattedDate = date.toISOString().replace(/-/g, "").replace(/:/g, "").replace(".", "").replace("T", ""); // Formatage de la date pour enlever les caractères spéciaux
+                    const formattedDate = date.toISOString().replace(/-/g, "").replace(/:/g, "").replace(".", "").replace("T", "");
                     nomFacture = `${nom}_${formattedDate}`;
                 } else {
                     throw new Error("Données utilisateur introuvables dans le stockage de session.");
@@ -50,13 +48,6 @@ const ModalePaiement: React.FC<ModalePaiementProps> = ({ onClose, onPaymentSucce
             console.error("Erreur lors du paiement:", error);
         }
     };
-
-
-
-
-
-
-
     return (
         <div className="modal2">
             <div className="modal2-content">

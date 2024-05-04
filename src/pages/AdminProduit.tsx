@@ -45,8 +45,7 @@ const AdminProduit: React.FC = () => {
                 [name]: value
             }));
         } else {
-            // Si la date est passée depuis le DatePicker, convertissez-la directement en chaîne de caractères
-            const dateString = e ? e.toISOString() : ''; // Convertir en chaîne de caractères
+            const dateString = e ? e.toISOString() : '';
             setFormData((prevState: any) => ({
                 ...prevState,
                 dateSortie: dateString
@@ -70,24 +69,18 @@ const AdminProduit: React.FC = () => {
 
         try {
             const formData = new FormData(e.currentTarget);
-
-            // Récupérer la valeur de la date depuis le DatePicker et la formater au format souhaité
-            const dateSortie = formData.get('dateSortie') as string; // Récupérer la date au format ISO
-            const formattedDate = dateSortie ? new Date(dateSortie).toISOString() : ''; // Formater la date au format ISOString
-
-            // Créer un objet JSON à partir des données du formulaire
+            const dateSortie = formData.get('dateSortie') as string;
+            const formattedDate = dateSortie ? new Date(dateSortie).toISOString() : '';
             const productData: any = {
                 idMateriel: selectedProduct.idMateriel,
                 libelle: formData.get('libelle')?.toString() || '',
                 description: formData.get('description')?.toString() || '',
                 prix: formData.get('prix')?.toString() || '',
-                dateSortie: formattedDate, // Utiliser la date formatée
+                dateSortie: formattedDate,
                 idCategorie: formData.get('idCategorie')?.toString() || selectedProduct.id_Categorie,
                 image: imageFile !== null ? imageFile : undefined
             };
-
             const response = await updateProduct(productData);
-
             setFormData({});
             setSelectedProduct(null);
             setImageFile(null);
@@ -95,8 +88,6 @@ const AdminProduit: React.FC = () => {
             console.error('Erreur lors de la modification du produit:', error);
         }
     };
-
-    // Fonction pour gérer le changement de chaque champ du formulaire
     const handleNewProductFormChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> | Date) => {
         if (typeof e === 'object' && e !== null && 'target' in e) {
             const { name, value } = e.target;
@@ -105,15 +96,13 @@ const AdminProduit: React.FC = () => {
                 [name]: value
             }));
         } else {
-            // Si la date est passée depuis le DatePicker, convertissez-la directement en chaîne de caractères
-            const dateString = e ? e.toISOString() : ''; // Convertir en chaîne de caractères
+            const dateString = e ? e.toISOString() : '';
             setNewProductData((prevState: any) => ({
                 ...prevState,
                 dateSortie: dateString
             }));
         }
     };
-    // Fonction pour gérer le changement de l'image du nouveau produit
     const handleNewProductImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files && files.length > 0) {
@@ -125,26 +114,14 @@ const AdminProduit: React.FC = () => {
         }
     };
 
-
-
-// Fonction pour gérer la soumission du formulaire
     const handleAddProductSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Données du nouveau produit :', newProductData);
-
-        // Obtenir la date actuelle
         const currentDate = new Date();
-        // Formater la date au format ISOString
         const formattedDate = currentDate.toISOString();
-
-        // Ajouter la date au nouvel objet de produit
         const updatedProductData = {
             ...newProductData,
             dateSortie: formattedDate
         };
-        console.log('Données du nouveau produit :', updatedProductData);
-
-
         const result = await addProduct(updatedProductData);
         setFormData({});
         setSelectedProduct(null);
@@ -198,7 +175,6 @@ const AdminProduit: React.FC = () => {
         }
 
         try {
-            // Envoyer une requête pour supprimer le produit avec l'ID spécifié
             const result =  await deleteProduct(productId);
 
             if(result.message === "Impossible de supprimer un produit lié à une ou plusieurs commandes"){
@@ -206,13 +182,7 @@ const AdminProduit: React.FC = () => {
             }else{
                 alert("Produit supprimé avec succée")
             }
-
-
-
-            // Mettre à jour la liste des produits après la suppression
             setProduits(await fetchProduits());
-
-            // Fermer la modal après la suppression
             setSelectedProduct(null);
         } catch (error) {
             console.error('Erreur lors de la suppression du produit :', error);
@@ -349,7 +319,7 @@ const AdminProduit: React.FC = () => {
                             name="dateSortie"
                             selected={formData.dateSortie ? new Date(formData.dateSortie) : null}
                             onChange={(date: Date) => handleFormChange(date)}
-                            dateFormat="dd/MM/yyyy" // Format de date spécifié ici
+                            dateFormat="dd/MM/yyyy"
                             placeholderText="Sélectionner une date"
                             showYearDropdown
                             scrollableYearDropdown

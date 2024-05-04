@@ -22,7 +22,7 @@ export async function FetchAdresse(Adressedata: { rue: string; ville: string; CD
             throw new Error('Erreur lors de l\'ajout de l\'adresse');
         }
         result = await response.json();
-    } catch (error: any) { // Spécifier le type d'erreur comme `any`
+    } catch (error: any) {
         console.error('Erreur lors de l\'ajout de l\'adresse', error);
         alert(error.message);
     }

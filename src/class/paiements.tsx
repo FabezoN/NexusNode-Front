@@ -12,7 +12,7 @@ export async function FetchPaiement(PaiementData: { datePaiement: string, Etat: 
             throw new Error('Echec du paiement');
         }
          result = await response.json();
-    } catch (error: any) { // Spécifier le type d'erreur comme `any`
+    } catch (error: any) {
         console.error('Erreur lors de l\'ajout du paiement', error);
         alert(error.message);
     }

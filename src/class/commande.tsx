@@ -18,7 +18,6 @@ export async function fetchCommandes() {
     }
 }
 export const fetchTotalSales = async (year: number) => {
-    console.log(year, 'année fetchTotalSales ')
 
     try {
         const response = await axios.get(`http://localhost:3000/commande/total-ventes/${year}`);
@@ -28,7 +27,6 @@ export const fetchTotalSales = async (year: number) => {
     }
 };
 export async function fetchTotalCommande(year: number) {
-    console.log(year, 'année fetchTotalCommande ')
     try {
         const response = await fetch(`http://localhost:3000/commande/totalCommande/${year}`, {
             method: 'GET',
@@ -47,7 +45,6 @@ export async function fetchTotalCommande(year: number) {
 }
 
 export async function PostCommande(CommandeData: { dateCommande: string, nomFacture: string, cheminFacture: string, idPaiement: number, idAdresse: number, idUser: number}) {
-    console.log(CommandeData);
     const cartItemsArray: { id: number, quantite: number }[] = [];
 
     const cartData = localStorage.getItem("cart");
@@ -56,11 +53,10 @@ export async function PostCommande(CommandeData: { dateCommande: string, nomFact
 
         Object.entries(cartObject).forEach(([key, quantite]) => {
             const [idStr] = key.split("/");
-            const id = parseInt(idStr); // Convertir l'ID en nombre
+            const id = parseInt(idStr);
             cartItemsArray.push({ id, quantite });
         });
 
-        console.log(cartItemsArray); // Afficher les données extraites
     }
 
     try {
@@ -77,7 +73,7 @@ export async function PostCommande(CommandeData: { dateCommande: string, nomFact
             throw new Error('Echec de l\'ajout de la commande');
         }
         const result = await response.json();
-    } catch (error: any) { // Spécifier le type d'erreur comme `any`
+    } catch (error: any) {
         console.error('Erreur de l\'ajout de la commande', error);
         alert(error.message);
     }

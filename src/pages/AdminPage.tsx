@@ -14,16 +14,15 @@ const AdminPage: React.FC = () => {
             const userRole = userObject.info.role;
 
             if (userRole !== 2) {
-                navigate('/'); // Redirige vers la page d'accueil
+                navigate('/');
             }
         } else {
-            navigate('/'); // Redirige vers la page d'accueil si pas de données utilisateur
+            navigate('/');
         }
 
         const fetchData = async () => {
             try {
                 const data = await fetchCommandes();
-                console.log('Données des commandes:', data);
             } catch (error) {
                 console.error('Erreur lors de la récupération des commandes:', error);
             }

@@ -10,7 +10,7 @@ const LoginForm: React.FC = () => {
         email: '',
         password: ''
     });
-    const navigate = useNavigate(); // Utilise useNavigate pour la navigation
+    const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = React.useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,11 +24,9 @@ const LoginForm: React.FC = () => {
         e.preventDefault();
         setErrorMessage('');
         try {
-            // Envoi des données du formulaire
            const data =  await loginUser(LoginForm);
            if(data !== undefined){
                const user = JSON.stringify(data);
-               // Réinitialisation du formulaire
                sessionStorage.setItem('user', user);
                setFormData({
                    email: '',
@@ -36,14 +34,12 @@ const LoginForm: React.FC = () => {
                });
                navigate('/');
            }
-
         } catch (error) {
             console.error('Erreur lors de la connexion:', error);
             navigate('/login');
             setErrorMessage('Erreur lors de la connexion. Veuillez réessayer.');
         }
     };
-
     return (
         <div className="Login">
                 <div className="TopForm">

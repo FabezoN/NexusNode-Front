@@ -4,7 +4,7 @@ import Layout from "../components/Layout/Layout";
 import { fetchProduitsCategorie } from "../class/produit";
 import './ProduitPage.css';
 import AddToCartFunction from "../components/Hooks/AddToCartFunction";
-import Logo from "../assets/LogoNexusNode.png";
+
 
 const ProduitsPage: React.FC = () => {
     const [produitdetails, setProduitdetails] = useState<any[]>([]);

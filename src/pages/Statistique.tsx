@@ -18,10 +18,10 @@ const Statistique: React.FC = () => {
                 const userRole = userObject.info.role;
 
                 if (userRole !== 2) {
-                    navigate('/error404'); // Redirige vers la page d'accueil
+                    navigate('/error404');
                 }
             } else {
-                navigate('/'); // Redirige vers la page d'accueil si pas de données utilisateur
+                navigate('/');
             }
         };
 
@@ -29,14 +29,12 @@ const Statistique: React.FC = () => {
             try {
                 const commandeData = await fetchTotalCommande(year);
                 const salesData = await fetchTotalSales(year);
-                console.log(salesData);
                 setTotalCommande(commandeData.nbCommande);
                 setProductStats(salesData);
             } catch (error) {
                 console.error('Erreur lors de la récupération des données:', error);
             }
         };
-
         checkUserRole();
         fetchData(selectedYear);
     }, [navigate, selectedYear]);

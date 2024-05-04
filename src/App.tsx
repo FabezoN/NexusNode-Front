@@ -15,7 +15,7 @@ import Statistique from "./pages/Statistique";
 import PanierPages from "./pages/PanierPages";
 
 let URL = process.env
-console.log(URL);
+
 
 const router = createBrowserRouter([
   {

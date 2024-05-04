@@ -13,7 +13,7 @@ const AddToCartFunction: React.FC<AddToCartFunctionProps> = ({ productId, select
 
     const addToCart = () => {
         const existingCart = JSON.parse(localStorage.getItem("cart") || "{}");
-        const cartKey = `${productId}/${libelleId}/${prix}`; // Création de la clé unique
+        const cartKey = `${productId}/${libelleId}/${prix}`;
         const updatedCart = {
             ...existingCart,
             [cartKey]: (existingCart[cartKey] || 0) + selectedQuantity
@@ -22,7 +22,7 @@ const AddToCartFunction: React.FC<AddToCartFunctionProps> = ({ productId, select
         setShowPopup(true);
         setTimeout(() => {
             setShowPopup(false);
-        }, 2000); // 2000 milliseconds = 2 seconds
+        }, 2000);
     };
 
     return (

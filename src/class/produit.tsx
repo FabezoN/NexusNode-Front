@@ -13,10 +13,8 @@ export async function fetchProduits() {
             throw new Error('Erreur lors de la récupération des matériaux');
         }
         return await response.json();
-        // Traitez les données récupérées ici, par exemple, mettez-les à jour dans votre application
     } catch (error) {
         console.error('Erreur lors de la récupération des matériaux:', error);
-        // Gérez l'erreur ici, par exemple, affichez un message d'erreur à l'utilisateur
     }
 }
 
@@ -39,7 +37,7 @@ export async function addCategorie(libelle: string) {
 
         const result = await response.json();
         alert('Catégorie enregistré avec succès!');
-    } catch (error: any) { // Spécifier le type d'erreur comme `any`
+    } catch (error: any) {
         console.error('Erreur lors de l\'ajout de la catégorie:', error);
         alert(error.message);
     }
@@ -69,9 +67,8 @@ export async function addCategorie(libelle: string) {
             }
 
             const result = await response.json();
-            console.log(result);
             alert('Catégorie modifié avec succès!');
-        } catch (error: any) { // Spécifier le type d'erreur comme `any`
+        } catch (error: any) {
             console.error('Erreur lors de la modification de la catégorie', error);
             alert(error.message);
         }
@@ -91,10 +88,8 @@ export async function fetchProduitsCategorie(idCategorie: string) {
             throw new Error('Erreur lors de la récupération des matériaux');
         }
         return await response.json();
-        // Traitez les données récupérées ici, par exemple, mettez-les à jour dans votre application
     } catch (error) {
         console.error('Erreur lors de la récupération des matériaux:', error);
-        // Gérez l'erreur ici, par exemple, affichez un message d'erreur à l'utilisateur
     }
 }
 export async function deleteCategorie(idCategorie: string) {
@@ -110,10 +105,8 @@ export async function deleteCategorie(idCategorie: string) {
             throw new Error('Erreur lors de la récupération des matériaux');
         }
         return await response.json();
-        // Traitez les données récupérées ici, par exemple, mettez-les à jour dans votre application
     } catch (error) {
         console.error('Erreur lors de la récupération des matériaux:', error);
-        // Gérez l'erreur ici, par exemple, affichez un message d'erreur à l'utilisateur
     }
 }
 export async function getCategorie() {
@@ -131,10 +124,8 @@ export async function getCategorie() {
         return await response.json();
     } catch (error) {
         console.error('Erreur lors de la récupération des catégories:', error);
-        // Gérez l'erreur ici, par exemple, affichez un message d'erreur à l'utilisateur
     }
 }
-// Fonction pour enregistrer un produit
 interface ProductFormData {
     idMateriel: string;
     libelle: string;
@@ -142,13 +133,12 @@ interface ProductFormData {
     prix: string;
     dateSortie: string;
     idCategorie: string;
-    image?: File; // Optionnel si l'utilisateur souhaite mettre à jour l'image
+    image?: File;
 }
 
 
 export async function updateProduct(formData: ProductFormData) {
     try {
-        console.log(formData)
         const idMateriel = formData.idMateriel
         const response = await axios.patch(`${URL_API}/materiel/${idMateriel}`, formData, {
             headers: {
@@ -203,7 +193,6 @@ export async function getCategorieById(idCat: string){
         return await response.json();
     } catch (error) {
         console.error('Erreur lors de la récupération des catégories:', error);
-        // Gérez l'erreur ici, par exemple, affichez un message d'erreur à l'utilisateur
     }
 };
 

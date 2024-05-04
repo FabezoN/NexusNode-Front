@@ -22,7 +22,7 @@ const CommandesPage: React.FC = () => {
     const [commandes, setCommandes] = useState<ICommande[]>([]);
     const [isModalOpen, setModalOpen] = useState(false);
     const [selectedCommande, setSelectedCommande] = useState<ICommande | null>(null);
-    const [search, setSearch] = useState('');  // État pour la valeur de recherche
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
         const storage = sessionStorage.getItem('user');
@@ -61,13 +61,10 @@ const CommandesPage: React.FC = () => {
             console.error("Le chemin du fichier PDF est vide.");
         }
     };
-
-    // Fonction pour filtrer les commandes
     const filteredCommandes = commandes.filter(commande =>
         commande.idCommande.toString().includes(search) ||
         commande.idUser.toString().includes(search) ||
         commande.NomClient.toString().includes(search)
-
     );
     return (
         <Layout>

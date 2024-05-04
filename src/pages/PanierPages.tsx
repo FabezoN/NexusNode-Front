@@ -89,9 +89,9 @@ const PanierPages: React.FC = () => {
         setAdresseData({ ...AdresseForm, [name]: value });
     };
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault(); // Empêcher le comportement par défaut du formulaire
+        e.preventDefault();
 
-        setErrorMessage(''); // Réinitialiser le message d'erreur
+        setErrorMessage('');
 
         try {
             const Adresse = await FetchAdresse(AdresseForm);
