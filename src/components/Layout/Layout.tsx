@@ -52,7 +52,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     <div className="ProfileMenu">
                                         {userRole === 1 && (
                                             <React.Fragment>
-                                                <NavLink to="/profile" className="MenuOption">Profil</NavLink>
+                                                <NavLink to="/historique" className="MenuOption">Commande</NavLink>
                                                 <NavLink to="/login" className="MenuOption">Déconnexion</NavLink>
                                             </React.Fragment>
                                         )}

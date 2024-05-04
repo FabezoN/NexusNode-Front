@@ -18,6 +18,40 @@ export async function fetchCommandes() {
         console.error('Erreur lors de la récupération des commandes:', error);
     }
 }
+export async function fetchAllCommandes() {
+    try {
+        const response = await fetch(`${URL_API}/commande/all`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de la récupération des commandes');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Erreur lors de la récupération des commandes:', error);
+    }
+}
+export async function fetchAllCommandesById(idUser:string) {
+    try {
+        const response = await fetch(`${URL_API}/commande/${idUser}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de la récupération des commandes');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Erreur lors de la récupération des commandes:', error);
+    }
+}
 export const fetchTotalSales = async (year: number) => {
     //console.log(year, 'année fetchTotalSales ')
 

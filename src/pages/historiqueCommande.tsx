@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout/Layout';
 import './AdminPage.css';
-import { fetchAllCommandes } from '../class/commande';
+import { fetchAllCommandesById } from '../class/commande';
 import { BsFiletypePdf } from "react-icons/bs";
 import { URL_API } from '../env';
 
@@ -39,8 +39,15 @@ const CommandesPage: React.FC = () => {
 
         const fetchData = async () => {
             try {
-                const allCommandes = await fetchAllCommandes();
-                setCommandes(allCommandes);
+                const storage = sessionStorage.getItem('user');
+                if (storage) {
+                    const userObject = JSON.parse(storage);
+                    const userId = userObject.info.id
+
+                    const allCommandes = await fetchAllCommandesById(userId);
+
+                    setCommandes(allCommandes);
+                }
             } catch (error) {
                 console.error('Erreur lors de la récupération des commandes:', error);
                 setCommandes([]); // Assure-toi que commandes est toujours un tableau
