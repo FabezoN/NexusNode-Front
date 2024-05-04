@@ -10,12 +10,11 @@ import ProduitsPage from "./pages/ProduitsPage";
 import AdminProduit from "./pages/AdminProduit";
 import ERROR from "./pages/ERROR";
 import Statistique from "./pages/Statistique";
+import Historique from "./pages/historiqueCommande"
 
 
 import PanierPages from "./pages/PanierPages";
 
-let URL = process.env
-//console.log(URL);
 
 const router = createBrowserRouter([
   {
@@ -60,6 +59,11 @@ const router = createBrowserRouter([
         path:'/statistique',
         element: <Statistique/>
     },
+    {
+        path:'/historique',
+        element: <Historique/>
+    },
+
 
 ])
 
