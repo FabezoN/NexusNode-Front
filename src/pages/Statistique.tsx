@@ -55,39 +55,43 @@ const Statistique: React.FC = () => {
 
     return (
         <Layout>
-            <h2 className="titre">Statistique</h2>
+        <h2 className="titre">Statistique</h2>
             <div>
-                <select value={selectedYear} onChange={handleYearChange}>
-                    <option value={new Date().getFullYear()}>Année en cours</option>
-                    {options}
-                </select>
-                <div>
-                    <h2>TOTAL COMMANDE</h2>
-                    <h2>{totalCommande}</h2>
+                <div className="AnnéeCours">
+                    <h3>Affichage des données en fonction de l'année : </h3>
+                    <select className="SelectAnnée" value={selectedYear} onChange={handleYearChange}>
+                        <option value={new Date().getFullYear()}>Année en cours</option>
+                        {options}
+                    </select>
                 </div>
-                <div>
-                    <h2>CHIFFRE D'AFFAIRES</h2>
+                <div className="TotalCommande">
+                    <h3>TOTAL COMMANDE</h3>
+                    <h3>{totalCommande}</h3>
                 </div>
-                <div>
-
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Produit</th>
-                            <th>Quantité vendue</th>
-                            <th>Revenu total</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {productStats && productStats.length > 0 && productStats.map((product: any, index: number) => (
-                            <tr key={index}>
-                                <td>{product.libelle_produit}</td>
-                                <td>{product.quantite_totale}</td>
-                                <td>{product.revenu_total}</td>
+                <div className="ChiffreAff">
+                    <div>
+                        <h2>CHIFFRE D'AFFAIRES</h2>
+                    </div>
+                    <div>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Produit</th>
+                                <th>Quantité vendue</th>
+                                <th>Revenu total</th>
                             </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            {productStats && productStats.length > 0 && productStats.map((product: any, index: number) => (
+                                <tr key={index}>
+                                    <td>{product.libelle_produit}</td>
+                                    <td>{product.quantite_totale}</td>
+                                    <td>{product.revenu_total}</td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </Layout>

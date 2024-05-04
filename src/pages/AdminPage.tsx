@@ -36,20 +36,20 @@ const AdminPage: React.FC = () => {
         <Layout>
             <h2 className="titre">Page d'administration</h2>
             <div className="categories">
-                <div className="commandes">
+                <div className="buttonsCate">
                     <NavLink to="/CommandePage">
-                        <button>Consulter</button>
+                        <button className="CategoBtn">Voir toutes les commandes</button>
                     </NavLink>
                 </div>
-                <div className="produits">
+                <div className="buttonsCate">
                     <NavLink to="/AdminProduit">
-                        <button>Produits</button>
+                        <button className="CategoBtn">Voir tous les produits</button>
                     </NavLink>
 
                 </div>
-                <div className="statistique">
+                <div className="buttonsCate">
                     <NavLink to="/statistique">
-                        <button>Statistique</button>
+                        <button className="CategoBtn">Statistiques de vente</button>
                     </NavLink>
                 </div>
             </div>

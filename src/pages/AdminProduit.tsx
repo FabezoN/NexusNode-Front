@@ -5,6 +5,7 @@ import { fetchProduits, getCategorie, getCategorieById, updateCategorie, addCate
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from '../components/Modal/Modal';
+import './AdminProduit.css'
 
 const AdminProduit: React.FC = () => {
     const [produits, setProduits] = useState<any[]>([]);
@@ -221,11 +222,15 @@ const AdminProduit: React.FC = () => {
     return (
         <Layout>
             <h2 className="titre">Page Produits</h2>
-            <NavLink to="/adminpage">
-                <button>Retour</button>
-            </NavLink>
-            <button onClick={toggleAddProductModal}>Ajouter</button>
+            <div className="btnAdminProduit">
+                <NavLink to="/adminpage">
+                    <button>Retour</button>
+                </NavLink>
+                <button onClick={toggleAddProductModal}>Ajouter</button>
+            </div>
+            <div>
 
+            </div>
             <table>
                 <thead>
                 <tr>
@@ -253,7 +258,8 @@ const AdminProduit: React.FC = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="libelle">Libellé:</label>
-                        <input type="text" id="libelle" name="libelle" value={formData.materiel_libelle || ''} onChange={handleFormChange}/>
+                        <input type="text" id="libelle" name="libelle" value={formData.materiel_libelle || ''}
+                               onChange={handleFormChange}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="description">Description:</label>
