@@ -19,18 +19,28 @@ const AdminProduit: React.FC = () => {
     const [showAddProductModal, setShowAddProductModal] = useState<boolean>(false);
     const [newProductData, setNewProductData] = useState<any>({});
 
+
+    const initFetch = async () => {
+        setProduits(await fetchProduits());
+        setCategorie(await getCategorie());
+    };
     useEffect(() => {
-        const initFetch = async () => {
-            setProduits(await fetchProduits());
-            setCategorie(await getCategorie());
-        };
         initFetch();
     }, []);
 
+
     const handleRowClick = (product: any) => {
-        setImageFile(null)
+        setImageFile(null);  // Reset l'image précédente
         setSelectedProduct(product);
-        setFormData(product);
+        setFormData({
+            idMateriel: product.idMateriel,
+            libelle: product.materiel_libelle,
+            description: product.description,
+            prix: product.prix,
+            dateSortie: new Date(product.dateSortie),  // Transformer la date ISO en objet Date
+            idCategorie: product.id_Categorie,
+            imagePath: product.PATH_Image  // Ajouter le chemin de l'image
+        });
     };
 
     const handleCloseModal = () => {
@@ -58,8 +68,11 @@ const AdminProduit: React.FC = () => {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             setImageFile(e.target.files[0]);
+        } else {
+            setImageFile(null); // Ici, on remet à null si aucune image n'est choisie (l'utilisateur enlève la sélection)
         }
     };
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -70,31 +83,31 @@ const AdminProduit: React.FC = () => {
 
         try {
             const formData = new FormData(e.currentTarget);
+            const dateSortie = formData.get('dateSortie') as string;
+            const formattedDate = dateSortie ? new Date(dateSortie).toISOString() : '';
 
-            // Récupérer la valeur de la date depuis le DatePicker et la formater au format souhaité
-            const dateSortie = formData.get('dateSortie') as string; // Récupérer la date au format ISO
-            const formattedDate = dateSortie ? new Date(dateSortie).toISOString() : ''; // Formater la date au format ISOString
-
-            // Créer un objet JSON à partir des données du formulaire
+            // Préparer les données du produit en incluant l'image si disponible
             const productData: any = {
                 idMateriel: selectedProduct.idMateriel,
                 libelle: formData.get('libelle')?.toString() || '',
                 description: formData.get('description')?.toString() || '',
                 prix: formData.get('prix')?.toString() || '',
-                dateSortie: formattedDate, // Utiliser la date formatée
+                dateSortie: formattedDate,
                 idCategorie: formData.get('idCategorie')?.toString() || selectedProduct.id_Categorie,
-                image: imageFile !== null ? imageFile : undefined
+                image: imageFile ? imageFile : selectedProduct.PATH_Image  // Utiliser l'imageFile si disponible, sinon l'ancienne image
             };
 
             const response = await updateProduct(productData);
-
             setFormData({});
             setSelectedProduct(null);
             setImageFile(null);
+            initFetch();  // Rafraîchir la liste des produits après la mise à jour
         } catch (error) {
             console.error('Erreur lors de la modification du produit:', error);
         }
     };
+
+
 
     // Fonction pour gérer le changement de chaque champ du formulaire
     const handleNewProductFormChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> | Date) => {
@@ -130,36 +143,40 @@ const AdminProduit: React.FC = () => {
 // Fonction pour gérer la soumission du formulaire
     const handleAddProductSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //console.log('Données du nouveau produit :', newProductData);
-
-        // Obtenir la date actuelle
         const currentDate = new Date();
-        // Formater la date au format ISOString
         const formattedDate = currentDate.toISOString();
-
-        // Ajouter la date au nouvel objet de produit
         const updatedProductData = {
             ...newProductData,
             dateSortie: formattedDate
         };
-        //console.log('Données du nouveau produit :', updatedProductData);
 
-
-        const result = await addProduct(updatedProductData);
-        setFormData({});
-        setSelectedProduct(null);
-        setImageFile(null);
+        try {
+            const result = await addProduct(updatedProductData);
+            if (result) {
+                alert("Produit ajouté avec succès !");
+                setNewProductData({});
+                setShowAddProductModal(false);
+                initFetch();  // Rafraîchir la liste des produits
+            } else {
+                alert("Erreur lors de l'ajout du produit.");
+            }
+        } catch (error) {
+            console.error("Erreur lors de l'ajout du produit : ", error);
+            alert("Erreur lors de l'ajout du produit.");
+        }
     };
 
 
+
+
     const handleSaveCategorie = async () => {
-        if (selectedCategorie[0]) {
-            await updateCategorie(selectedCategorie[0].idCategorie,newCategorieName);
-            setNewCategorieName('');
+        // Vérifie que selectedCategorie est défini et qu'il contient au moins un élément
+        if (selectedCategorie && selectedCategorie.length > 0) {
+            await updateCategorie(selectedCategorie[0].idCategorie, newCategorieName);
         } else {
             await addCategorie(newCategorieName);
-            setNewCategorieName('');
         }
+        setNewCategorieName('');
         setCategorie(await getCategorie());
         setShowCategorieModal(false);
     };
@@ -198,26 +215,18 @@ const AdminProduit: React.FC = () => {
         }
 
         try {
-            // Envoyer une requête pour supprimer le produit avec l'ID spécifié
-            const result =  await deleteProduct(productId);
-
-            if(result.message === "Impossible de supprimer un produit lié à une ou plusieurs commandes"){
+            const result = await deleteProduct(productId);
+            if (result.message === "Impossible de supprimer un produit lié à une ou plusieurs commandes") {
                 alert("Impossible de supprimer un produit lié à une ou plusieurs commandes")
-            }else{
-                alert("Produit supprimé avec succée")
+            } else {
+                alert("Produit supprimé avec succès");
+                initFetch();  // Rafraîchir la liste des produits
             }
-
-
-
-            // Mettre à jour la liste des produits après la suppression
-            setProduits(await fetchProduits());
-
-            // Fermer la modal après la suppression
-            setSelectedProduct(null);
         } catch (error) {
             console.error('Erreur lors de la suppression du produit :', error);
         }
     };
+
 
     return (
         <Layout>
@@ -258,36 +267,24 @@ const AdminProduit: React.FC = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="libelle">Libellé:</label>
-                        <input type="text" id="libelle" name="libelle" value={formData.materiel_libelle || ''}
-                               onChange={handleFormChange}/>
+                        <input type="text" id="libelle" name="libelle" value={formData.libelle || ''} onChange={handleFormChange}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="description">Description:</label>
-                        <textarea
-                            id="description"
-                            name="description"
-                            rows={4}
-                            cols={40}
-                            value={formData.description || ''}
-                            onChange={handleFormChange}
-                        />
+                        <textarea id="description" name="description" rows={4} cols={40} value={formData.description || ''} onChange={handleFormChange}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="prix">Prix:</label>
-                        <input type="text" id="prix" name="prix" value={formData.prix || ''}
-                               onChange={handleFormChange}/>
+                        <input type="text" id="prix" name="prix" value={formData.prix || ''} onChange={handleFormChange}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="categorie">Catégorie:</label>
-                        <select id="categorie" name="idCategorie" value={formData.idCategorie || ''}
-                                onChange={handleFormChange}>
+                        <select id="categorie" name="idCategorie" value={formData.idCategorie || ''} onChange={handleFormChange}>
                             <option value="">Sélectionner une catégorie</option>
-
                             {categorie.map((cat) => (
                                 <option key={cat.idCategorie} value={cat.idCategorie}>{cat.libelle}</option>
                             ))}
                         </select>
-                        <button type="button" onClick={() => setShowCategorieModal(true)}>Gérer les catégories</button>
                     </div>
                     <div className="form-group">
                         <label htmlFor="dateSortie">Date de sortie:</label>
@@ -303,14 +300,14 @@ const AdminProduit: React.FC = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="image">Image:</label>
+                        <label htmlFor="image">Image actuelle:</label>
+                        <img src={formData.imagePath} alt="Produit" style={{ width: '100px', height: 'auto' }}/>
                         <input type="file" id="image" name="image" onChange={handleImageChange}/>
                     </div>
                     <button type="submit">Modifier</button>
-                    <button type="button" onClick={() => deleteProduit(formData.idMateriel)}>Supprimer</button>
-
                 </form>
             </Modal>
+
             <Modal isOpen={showAddProductModal} onClose={toggleAddProductModal}>
                 <form onSubmit={handleAddProductSubmit}>
                     <div className="form-group">
